@@ -2,7 +2,7 @@
 @component("maps-ge-facade")
 class MapsGeFacade extends polymer.Base implements polymer.Element {
     attached() {
-
+        console.log('maps-ge-facade attached()');
         window['gmloaded'] = function () {
             console.log('google maps loaded');
 

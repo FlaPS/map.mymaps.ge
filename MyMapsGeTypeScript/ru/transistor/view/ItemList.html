@@ -1,0 +1,78 @@
+﻿<dom-module id="item-list">
+    <template>
+        <style>
+  
+
+	    paper-item:hover {
+		  background: #f8f8f8;
+	    }
+
+        .edit-canvas
+        {
+          border: 2px solid grey;
+          background-color: white;
+          padding: 20px;
+          width: 90%;
+          
+          top: 25%;
+          position: fixed;
+        }
+
+        .mouse-catcher{
+            position:fixed;
+            width: 100%;
+            height:100%;
+            left:0;
+            right:0;
+            top:0;
+            bottom:0;
+            background: white;
+            opacity: 0.5;
+            display: none;
+        }
+
+        .list-cavas
+        {
+            width: 80%;
+      
+            left : 10%;
+        }
+
+   
+        </style>
+            <div class="list-canvas">
+             
+                 total items <span>{{dataProvider.length}}</span>:
+                <template id="tempList" is="dom-repeat" items="{{dataProvider}}" role="menuitem">
+
+                    <paper-item class="flex" on-click="onSelect">
+                        <div class="flex-9" inline><span>{{item.name}}</span></div>
+                        <div class="flex-1" inline><span>{{item.quantity}}</span></div>
+                        <div class="flex-1" inline><span>{{item.price}}</span></div>
+                        <div class="flex-1" inline><span>{{item.sum}}</span></div>
+                    </paper-item>
+
+                </template>
+                <paper-item class ="horizontal layout" id="addForm">
+                    <paper-input class="flex-6" label="Name" value="{{name}}"></paper-input>
+                    <paper-input class="flex-1" id="quantityTxt" label="Amount" value="{{quantity}}" error-message="Wight format!"></paper-input>
+                    <paper-input class="flex-1" id="priceTxt" label="Price" value="{{price}}" error-message="Not money format!"></paper-input>
+                    <paper-button id="addButton" class="flex-1" inline raised on-click="onAddTriggered" disabled="{{!newEnabled}}">Add</paper-button>
+              </paper-item>
+             <div class="mouse-catcher" id="mouseCatcher"></div>
+                    <template is="dom-if" if="{{editMode}}">
+
+                        <paper-item class="horizontal layout edit-canvas" id="editForm">
+                            <paper-input class="flex-3" label="Name" value="{{uname}}"></paper-input>
+                            <paper-input class="flex-1" label="Amount" value="{{uquantity}}"></paper-input>
+                            <paper-input class="flex-1" label="Price" value="{{uprice}}"></paper-input>
+                            <paper-input class="flex-1" label="Price" disabled="true" value="{{usum}}"></paper-input>
+                            <paper-button class="flex-1" raised on-click="onRemoveTriggered">Remove</paper-button>
+                            <paper-button class="flex-1" raised on-click="onUpdateTriggered" disabled="{{!editEnabled}}">Save</paper-button>
+                        </paper-item>
+                    </template>
+            </div>
+    </template>
+
+</dom-module>
+<script src="ItemList.js"></script>

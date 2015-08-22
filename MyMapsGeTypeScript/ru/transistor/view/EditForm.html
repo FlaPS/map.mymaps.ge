@@ -1,0 +1,18 @@
+﻿<dom-module id="edit-form">
+    <template>
+        <style>
+        
+        </style>
+                    <div class="horizontal layout" id="editForm">
+                        <paper-input class="flex-7" label="Name" value="{{name}}"></paper-input>
+                        <paper-input class="flex-1" label="Amount" value="{{quantity}}"></paper-input>
+                        <paper-input class="flex-1" label="Price" value="{{price}}"></paper-input>
+                        <div class="flex-1"                     inline><span>{{item.sum}}</span></div>
+
+                        <paper-button class="flex-1" raised on-click="onRemoveTriggered">Remove</paper-button>
+                        <paper-button class="flex-1" raised on-click="onUpdateTriggered">Save</paper-button>
+                    </div>
+    </template>
+
+</dom-module>
+<script src="EditForm.js"></script>

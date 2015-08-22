@@ -1,0 +1,53 @@
+﻿
+<dom-module id="login-form">
+
+    <template>
+        <style>
+
+            /**
+             *
+             *  Half of harent and centered
+             */
+        .login-form-canvas
+        {
+         
+          background-color: white;
+          width: 50%;
+          left: 25%;
+          top: 25%;
+          position: absolute;
+        
+        }
+        </style>
+        <div class="vertical layout login-form-canvas">
+            <paper-input error-message="Invalid login!"  
+                         class="flex" 
+                         label="Login" 
+                         value="{{login}}">
+             </paper-input>
+
+
+            <paper-input error-message="Password to short"  
+                         class="flex" 
+                         label="Password" 
+                         value="{{password}}">
+
+            </paper-input>
+
+
+                <template is="dom-if" if="{{!registerMode}}">
+                    <paper-button class="colored"
+                                  raised on-click="onLoginTriggered">Sign In</paper-button>
+                    <paper-button class="colored"
+                                  raised on-click="onGoToRegisterMode">Register</paper-button>
+                </template>
+                <template is="dom-if" if="{{registerMode}}">
+                    <paper-input class="flex" label="Confirm password" error-message="Password doesn't match'" value="{{confirm}}"></paper-input>
+                    <paper-button class="colored" raised on-click="onRegisterTriggered">Sign Up</paper-button>
+                    <paper-button class="colored" raised on-click="onGoToSignUpMode">Back</paper-button>
+                </template>
+</div>
+    </template>
+
+</dom-module>
+<script src="LoginForm.js"></script>

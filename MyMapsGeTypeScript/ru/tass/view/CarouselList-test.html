@@ -1,0 +1,39 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <script src="../../../bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
+        <link rel="import" href="../../../bower_components/polymer/polymer.html">
+        <link rel="import" href="../../../bundle.html">
+        <title>CarouselHeader Test with mock data</title>
+    </head>
+    <body>
+    
+       <carousel-list id="list">
+
+       </carousel-list>
+        <script>
+            function setMock()
+            {
+                console.log('web components ready ');
+                var list = document.getElementById('list');
+                var array = [   new CarouselVO(-1,"Мария", 12,0,0,'gfgf','http://tass.ru/images/tass_logo_share_ru.png',100,1,              [0,2]),
+                                new CarouselVO(-1, "Максим", 11, 0, 1, 'gfgf', 'http://tass.ru/images/tass_logo_share_ru.png', 100, 1,      [0]),
+                                new CarouselVO(-1, "Маруся", 11, 0, 1, 'gfgf', 'http://tass.ru/images/tass_logo_share_ru.png', 100, 1,      [1, 2]),
+                                new CarouselVO(-1, "Иван", 11, 1, 1, 'gfgf', 'http://tass.ru/images/tass_logo_share_ru.png', 100, 1,        [0, 2]),
+                                new CarouselVO(-1, "Михаил", 11, 0, 1, 'gfgf', 'http://tass.ru/images/tass_logo_share_ru.png', 100, 1,      [0, 1]),
+                                new CarouselVO(-1, "Жорик", 11, 1, 1, 'gfgf', 'http://tass.ru/images/tass_logo_share_ru.png', 100, 1,       [0,  2]),
+                                new CarouselVO(-1, "Yo Mama", 11, 0, 1, 'gfgf', 'http://tass.ru/images/tass_logo_share_ru.png', 100, 1,     [2])
+                ];
+                var types = [new TypeVO(0, "Высотные"),
+                       new CarouselVO(1, "Детские"),
+                       new CarouselVO(2, "Экстримальные")]
+
+                list.typesProvider = types;
+         
+                list.dataProvider = array;
+            }
+            window.addEventListener("WebComponentsReady", setMock)
+
+        </script>
+    </body>
+</html>

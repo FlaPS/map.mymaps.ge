@@ -1,0 +1,39 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <script src="../../../bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
+        <link rel="import" href="../../../bower_components/polymer/polymer.html">
+        <link rel="import" href="../../../bundle.html">
+        <title>CarouselHeader Test with mock data</title>
+    </head>
+    <body>
+       <carousel-header id="searchHeader" allowVideo="true">
+
+       </carousel-header>
+        <script>
+            function setMock()
+            {
+                console.log('web components ready ');
+                var el = document.getElementById('searchHeader');
+                var array = [new CarouselVO(-1, "Мария"),
+                                new CarouselVO(-1, "Максим"),
+                                new CarouselVO(-1, "Маруся"),
+                                new CarouselVO(-1, "Иван"),
+                                new CarouselVO(-1, "Михаил"),
+                                new CarouselVO(-1, "Жорик"),
+                                new CarouselVO(-1, "Yo Mama")
+                ];
+
+
+                var types = [new TypeVO(1, "Высотные"),
+                               new CarouselVO(2, "Детские"),
+                               new CarouselVO(3, "Экстримальные")]
+                
+                el.typesProvider = types;
+                el.dataProvider = array;
+            }
+            window.addEventListener("WebComponentsReady", setMock)
+
+        </script>
+    </body>
+</html>

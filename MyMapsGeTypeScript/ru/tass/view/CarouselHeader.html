@@ -1,0 +1,154 @@
+﻿<dom-module id="carousel-header">
+    <template>
+       
+            <style > 
+
+            paper-menu {
+                border: 1px solid #e0e0e0;
+            }
+
+            paper-item {
+                --paper-item-min-height: 250px;
+                cursor: pointer;
+                -webkit-user-select: none;
+                user-select: none;
+            }
+            .types-menu {
+                position: absolute;
+                left: 0px;
+                width: 160px;
+                top: 0px;
+                overflow: auto;
+                bottom: 0px;
+            }
+
+            .type-font {
+                font-size: 12px;
+            }
+
+            #carousel-header {
+                height: 100px;
+            }
+
+            .carousel-image {
+                margin-left: 10px;
+                margin-right: 10px;
+                margin-bottom: 10px;
+                width: 100px;
+                height: 100px;
+            }
+
+            .description-box {
+                padding-left: 30px;
+            }
+
+            iron-icon {
+                font: 10pt;
+            }
+
+            .badges {
+                position: absolute;
+                right: 50px;
+                bottom: 10px;
+            }
+
+            h3 {
+                padding-left: 10px;
+            }
+
+            .right-header-menu {
+                position: absolute;
+                right: 20px;
+                bottom: 0px;
+            }
+
+            .header-bar {
+                height: 200px;
+            }
+
+            .header-input {
+                position: absolute;
+                left: 200px;
+                right: 180px;
+                bottom: 10px;
+            }
+
+            .snap-right {
+                position: absolute;
+                right: 0px;
+                width: 100px;
+            }
+
+            .to-right {
+                position: absolute;
+                right: 0px;
+            }
+
+            .header-item {
+                width: 130px;
+                height: 35px;
+            }
+        </style>
+
+
+
+
+
+
+
+            <paper-material elevation="1" class="header-bar">
+                <paper-menu multi selected="0" class="types-menu" id="typesMenu" on-iron-select="changeSelection" on-iron-deselect="changeSelection">
+
+
+                    <template id="typesList" is="dom-repeat" items="{{typesProvider}}">
+
+                        <paper-item selected index="{{index}}"><span>{{item.name}}</span></paper-item>
+
+                    </template>
+                </paper-menu>
+                <paper-input-container class="header-input" label="Name">
+                    <input list="aheads" is="paper-input" id="nameInput">
+                    <datalist id="aheads">
+                        <template id="aheadsList" is="dom-repeat" items="{{aheadsDataProvider}}" >
+
+                            <option value="{{item.name}}"></option>
+                            
+                        </template>
+                    </datalist>
+                </paper-input-container>
+                <div class="vertical layout right-header-menu flex-2" >
+               
+                    <div class="horizontal layout header-item">
+                    
+                        <iron-icon icon="icons:accessibility"></iron-icon>
+                        <span>{{age}}</span>
+                        <paper-slider min="0" max="18" value="{{age}}" class=" snap-right"></paper-slider>
+                    </div>
+                    <div class="horizontal layout header-item">
+
+                        <iron-icon icon="image:flash-on"></iron-icon>
+                        <span>{{intensity}}</span>
+                        <paper-slider min="0" max="9" value="{{intensity}}"  immediate-value-change="onImmediateIntensity" class=" snap-right"></paper-slider>
+                    </div>
+                    <div class="horizontal layout header-item">
+
+                        <iron-icon icon="image:camera-alt"></iron-icon>
+                       
+                        <paper-toggle-button checked="{{hasPhoto}}" class=" to-right"></paper-toggle-button>
+                    </div>
+                    <div class="horizontal layout header-item">
+
+                        <iron-icon icon="av:videocam"></iron-icon>
+                       
+                        <paper-toggle-button checked="{{hasVideo}}"   class=" to-right"></paper-toggle-button>
+                    </div>
+                    <paper-button on-click="resetInputs" >Очистить</paper-button>
+                   
+                </div>
+                
+
+            </paper-material>
+    </template>
+
+</dom-module>
+<script src="CarouselHeader.js"></script>

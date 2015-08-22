@@ -1,0 +1,14 @@
+﻿<dom-module id="map-type-list">
+    <template>
+        <paper-menu selected="0" class="types-menu" id="typesMenu" on-iron-select="changeTypeSelection" >
+
+            <template id="typesList" is="dom-repeat" items="{{types}}">
+
+                <paper-item index="{{index}}"><span>{{item.name}}</span></paper-item>
+
+            </template>
+        </paper-menu>
+    </template>
+
+</dom-module>
+<script src="MapTypeList.js"></script>

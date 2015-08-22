@@ -1,0 +1,33 @@
+﻿<dom-module id="carousel-list">
+    <template>
+        <style>
+  
+
+   
+        </style>
+            <div>
+                <carousel-header id="header" >
+
+                </carousel-header>
+                <template id="tempNoItems" is="dom-if" if="{{emptyResult}}">
+                    <div>Аттракционов не найдено</div>
+                </template>
+                <template id="tempList" is="dom-repeat" items="{{resultProvider}}" >
+
+                    <carousel-item-renderer hasvideo="{{item.hasVideo}}"
+                                            hasphoto="{{item.hasPhoto}}"
+                                            intensity="{{item.intensity}}"
+                                            desc="{{item.desc}}"
+                                            age="{{item.age}}"
+                                            name="{{item.name}}"
+                                            pic="{{item.pic}}" >
+
+                    </carousel-item-renderer>
+
+                </template>
+
+            </div>
+    </template>
+
+</dom-module>
+<script src="CarouselList.js"></script>

@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <script src="../../../../bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
+        <link rel="import" href="../../../../bower_components/polymer/polymer.html">
+        <link rel="import" href="../../../../bundle.html">
+        <title>MapTypes</title>
+        <style>
+
+        </style>
+    </head>
+
+    <body>
+    
+       <map-type-list id="list">
+
+       </map-type-list>
+    
+ 
+        <script>
+           
+            function setMock()
+            {
+                setTimeout(fnc, 1000);
+            }
+            function fnc()
+            {
+                console.log('web components ready ');
+                var list = document.getElementById('list');
+                var googleLayer=new   L.Google();
+                googleLayer.initialize('SATELLITE', null);
+                var pr = new MapTypesProvider();
+
+                list.setMapTypesProvider( pr);
+         
+     
+            }
+            window.addEventListener("WebComponentsReady", setMock)
+
+        </script>
+        <script charset="UTF-8" type="text/javascript" src="http://ecn.dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=7.0">
+        </script>
+        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAGo33r6UECbDAJV63G20ULh6RtyzKBkXc">
+        </script>
+    </body>
+</html>

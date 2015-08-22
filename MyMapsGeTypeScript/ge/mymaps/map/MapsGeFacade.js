@@ -21,6 +21,7 @@ var MapsGeFacade = (function (_super) {
         _super.apply(this, arguments);
     }
     MapsGeFacade.prototype.attached = function () {
+        console.log('maps-ge-facade attached()');
         window['gmloaded'] = function () {
             console.log('google maps loaded');
             console.log('web components ready ');

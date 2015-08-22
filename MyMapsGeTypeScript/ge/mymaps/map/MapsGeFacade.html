@@ -1,0 +1,31 @@
+﻿<dom-module id="maps-ge-facade">
+    <template>
+        <style>
+          
+            #typesList{
+                position: absolute;
+        
+                top:0px;
+                right:0px;
+                bottom:0px;
+                width: 250px;
+            }
+            </style>
+        <tbilisi-map-view id="mapView">
+
+        </tbilisi-map-view>
+        <map-type-list id="typesList">
+
+        </map-type-list>
+        <script>
+          
+ 
+
+        </script>
+        <script async defer charset="UTF-8" type="text/javascript" src="http://dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=6.2">
+        </script>
+        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAGo33r6UECbDAJV63G20ULh6RtyzKBkXc&callback=gmloaded">
+        </script>
+</template>
+</dom-module>
+<script src="MapsGeFacade.js"></script>

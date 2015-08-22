@@ -10,7 +10,7 @@
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <DebugType>full</DebugType>
     <DebugSymbols>true</DebugSymbols>
-        <TypeScriptEmitDecoratorMetadata>True</TypeScriptEmitDecoratorMetadata>
+    <TypeScriptEmitDecoratorMetadata>True</TypeScriptEmitDecoratorMetadata>
     <TypeScriptExperimentalDecorators>True</TypeScriptExperimentalDecorators>
     <TypeScriptToolsVersion>1.5</TypeScriptToolsVersion>
     <UseIISExpress>true</UseIISExpress>
@@ -883,14 +883,12 @@
     <Content Include="ge\mymaps\map\data\MapType.js" />
     <Content Include="ge\mymaps\map\data\MapTypesProvider.js" />
     <Content Include="ge\mymaps\map\MapsGeEvent.js" />
-    <Content Include="ge\mymaps\map\MapsGeFacade.js" />
-    <Content Include="ge\mymaps\map\view\MapTypeItemRenderer.js" />
+    <Content Include="ge\mymaps\map\MapsGeFacade.html" />
+    <Content Include="ge\mymaps\map\MapsGeFacade-test.html" />
     <Content Include="ge\mymaps\map\view\MapTypeList-test.html" />
     <Content Include="ge\mymaps\map\view\MapTypeList.html" />
-    <Content Include="ge\mymaps\map\view\MapTypeList.js" />
     <Content Include="ge\mymaps\map\view\TbilisiMapView-test.html" />
     <Content Include="ge\mymaps\map\view\TbilisiMapView.html" />
-    <Content Include="ge\mymaps\map\view\TbilisiMapView.js" />
     <Content Include="index.html" />
     <Content Include="ru\flaps\data\ErrorVO.js" />
     <Content Include="ru\flaps\data\ItemVO.js" />
@@ -945,7 +943,6 @@
     <TypeScriptCompile Include="bower_components\polymer-ts\polymer-ts.ts" />
     <TypeScriptCompile Include="ge\mymaps\map\data\MapType.ts" />
     <TypeScriptCompile Include="ge\mymaps\map\data\MapTypesProvider.ts" />
-    <TypeScriptCompile Include="ge\mymaps\map\MapsGeEvent.ts" />
     <TypeScriptCompile Include="ge\mymaps\map\MapsGeFacade.ts" />
     <TypeScriptCompile Include="ge\mymaps\map\view\MapTypeList.ts" />
     <TypeScriptCompile Include="ge\mymaps\map\view\TbilisiMapView.ts" />
@@ -1377,11 +1374,6 @@
     <Content Include="css\tass.styl" />
     <Content Include="ge\mymaps\map\data\MapType.js.map" />
     <Content Include="ge\mymaps\map\data\MapTypesProvider.js.map" />
-    <Content Include="ge\mymaps\map\MapsGeEvent.js.map" />
-    <Content Include="ge\mymaps\map\MapsGeFacade.js.map" />
-    <Content Include="ge\mymaps\map\view\MapTypeItemRenderer.js.map" />
-    <Content Include="ge\mymaps\map\view\MapTypeList.js.map" />
-    <Content Include="ge\mymaps\map\view\TbilisiMapView.js.map" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -1468,17 +1460,20 @@
   </ProjectExtensions>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
     <TypeScriptRemoveComments>false</TypeScriptRemoveComments>
-    <TypeScriptSourceMap>true</TypeScriptSourceMap>
+    <TypeScriptSourceMap>True</TypeScriptSourceMap>
     <TypeScriptTarget>ES5</TypeScriptTarget>
     <TypeScriptCompileOnSaveEnabled>True</TypeScriptCompileOnSaveEnabled>
     <TypeScriptNoImplicitAny>False</TypeScriptNoImplicitAny>
     <TypeScriptModuleKind>CommonJS</TypeScriptModuleKind>
     <TypeScriptOutFile />
-    <TypeScriptOutDir>build</TypeScriptOutDir>
+    <TypeScriptOutDir>
+    </TypeScriptOutDir>
     <TypeScriptGeneratesDeclarations>True</TypeScriptGeneratesDeclarations>
     <TypeScriptNoEmitOnError>True</TypeScriptNoEmitOnError>
-    <TypeScriptMapRoot>build</TypeScriptMapRoot>
-    <TypeScriptSourceRoot>build</TypeScriptSourceRoot>
+    <TypeScriptMapRoot>
+    </TypeScriptMapRoot>
+    <TypeScriptSourceRoot>
+    </TypeScriptSourceRoot>
     <FilesToIncludeForPublish>AllFilesInProjectFolder</FilesToIncludeForPublish>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">

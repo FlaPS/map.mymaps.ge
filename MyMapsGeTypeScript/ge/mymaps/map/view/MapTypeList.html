@@ -1,10 +1,20 @@
 ﻿<dom-module id="map-type-list">
+    <style>
+        .unselectable {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+    </style>
     <template>
-        <paper-menu selected="0" class="types-menu" id="typesMenu" on-iron-select="changeTypeSelection" >
+        <paper-menu selected="0" class="types-menu unselectable" role="menu" id="typesMenu" on-iron-select="changeTypeSelection" >
 
             <template id="typesList" is="dom-repeat" items="{{types}}">
 
-                <paper-item index="{{index}}"><span>{{item.name}}</span></paper-item>
+                <paper-item index="{{index}}" role="listitem">{{item.name}}</paper-item>
 
             </template>
         </paper-menu>

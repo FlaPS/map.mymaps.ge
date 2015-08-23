@@ -28,7 +28,7 @@ class TbilisiMapView extends polymer.Base implements polymer.Element {
     public initialize(): void {
         this._map = new L.Map('leafletView').setView([51.505, -0.09], 13);
         this._mapTypesProvider = new MapTypesProvider();
-        this._map.addEventListener('mousedown',
+
         this._map.addEventListener('click', this.longPressHandler.bind(this));
         this.mapTypesProvider.addEventListener(MapTypesProvider.TYPE_CHANGED, this.mapTypeChanged.bind(this))
         this.mainMapLayer = this.mapTypesProvider.types[0].layer;

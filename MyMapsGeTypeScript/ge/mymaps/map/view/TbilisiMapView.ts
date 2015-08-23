@@ -2,6 +2,7 @@
 @component("tbilisi-map-view")
 class TbilisiMapView extends polymer.Base implements polymer.Element {
 
+    public static get LONG_PRESS(): string { return "longPress"; }
    // public static get CHANGE_MAP_TYPE(): string { return "changeMapType"; }
 
 
@@ -19,9 +20,16 @@ class TbilisiMapView extends polymer.Base implements polymer.Element {
     public initialize(): void {
         this._map = new L.Map('leafletView').setView([51.505, -0.09], 13);
         this._mapTypesProvider = new MapTypesProvider();
-
+        this._map.addEventListener('click', this.longPressHandler.bind(this));
         this.mapTypesProvider.addEventListener(MapTypesProvider.TYPE_CHANGED, this.mapTypeChanged.bind(this))
         this.mainMapLayer = this.mapTypesProvider.types[0].layer;
+    }
+
+    private longPressHandler(e: L.LeafletMouseEvent): void
+    {
+        console.log(e);
+
+        this.fire(TbilisiMapView.LONG_PRESS, e.latlng, { bubbles: true });
     }
 
     private _mapTypesProvider: MapTypesProvider;

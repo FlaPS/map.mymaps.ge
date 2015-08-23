@@ -2,7 +2,9 @@
 @component("maps-ge-facade")
 class MapsGeFacade extends polymer.Base implements polymer.Element {
     attached() {
+        console.log(this);
         console.log('maps-ge-facade attached()');
+        
         window['gmloaded'] = function () {
             console.log('google maps loaded');
 
@@ -15,6 +17,9 @@ class MapsGeFacade extends polymer.Base implements polymer.Element {
 
             /*var list = document.getElementById('list');
             list.mapTypesProvider = map.mapTypesProvider;*/
+        }
+        if (window['google'] && window['google']['maps']) {
+            setTimeout(window['gmloaded'], 200);
         }
     }
 }

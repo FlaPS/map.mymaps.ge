@@ -16,9 +16,18 @@
 
     <body>
         <div style="width:250px;height:350px; position:absolute; right:150px; top: 50px;">
-            <maps-ge-facade class="facade"></maps-ge-facade>
+            <maps-ge-facade class="facade" id="mapFacade"></maps-ge-facade>
         </div>
+        <script>
+            function longPressHandler(e)
+            {
+                console.log('Long press emited')
+                console.log(e);
+            }
+            var mapFacade = document.getElementById('mapFacade');
+            mapFacade.addEventListener(TbilisiMapView.LONG_PRESS, longPressHandler)
 
+        </script>
 
     </body>
  </html>

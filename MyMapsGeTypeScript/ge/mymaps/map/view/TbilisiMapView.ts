@@ -27,7 +27,7 @@ class TbilisiMapView extends polymer.Base implements polymer.Element {
 
     private longPressHandler(e: L.LeafletMouseEvent): void
     {
-        console.log(e);
+        //console.log(e);
 
         this.fire(TbilisiMapView.LONG_PRESS, e.latlng, { bubbles: true });
     }

@@ -24,10 +24,30 @@
                 console.log('Long press emited')
                 console.log(e);
             }
-            var mapFacade = document.getElementById('mapFacade');
-            mapFacade.addEventListener(TbilisiMapView.LONG_PRESS, longPressHandler)
-
+            
+            var obj;
+            var mapFacade
+            function fnc() {
+                if (obj == null) {
+                    if (mapFacade == null) {
+                        mapFacade = document.getElementById('mapFacade');
+                        mapFacade.addEventListener(ge.mymaps.map.view.GeMapView.LONG_PRESS, longPressHandler)
+                    }
+                    var i = 0;
+                    while (i < 100) {
+                        obj = new ge.mymaps.map.data.GeOrganization(i+1, 'name of orgaization '+i, 41.5 + Math.random() * 0.5, 44.5 + Math.random() * 0.5)
+                        mapFacade.addOrganization(obj);
+                        i++;
+                    }
+                }
+                else {
+                    obj = null;
+                    mapFacade.clearOrganizations();
+                }
+            }
         </script>
-
+        <div style="position:absolute">
+            <input type="button" value="Switch" onclick="fnc()" />
+        </div>
     </body>
  </html>

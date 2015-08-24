@@ -42,6 +42,8 @@ module ge.mymaps.map.view {
             this._map.addEventListener('click', this.longPressHandler.bind(this));
             this.mapTypesProvider.addEventListener(MapTypesProvider.TYPE_CHANGED, this.mapTypeChanged.bind(this))
             this.mainMapLayer = this.mapTypesProvider.types[0].layer;
+            //mapbox plugin @see https://www.mapbox.com/mapbox.js/example/v1.0.0/leaflet-locatecontrol/
+            L.control['locate']().addTo(this._map);
         }
 
         private longPressHandler(e: L.LeafletMouseEvent): void {

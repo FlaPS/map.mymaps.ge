@@ -22,7 +22,9 @@ class MapsGeFacade extends polymer.Base implements polymer.Element {
      }
     private gmLoadedHandler():void
     {
-
+        this.locator = ge.mymaps.map.utils.Locator.instance;
+        this.locator.updateLiveLocation();
+        this.locator.addEventListener(ge.mymaps.map.utils.Locator.GEO_LIVE_UPDATE, this.geoLiveUpdateHandler.bind(this));
         console.log('google maps loaded');
 
         console.log('web components ready ');
@@ -32,22 +34,37 @@ class MapsGeFacade extends polymer.Base implements polymer.Element {
         var list: MapTypeList = <any>document.getElementById('typesList');
 
         list.setMapTypesProvider(this._map.mapTypesProvider);
-
+  
+        this._markerCluster = new L['MarkerClusterGroup']();
+        this._map.leafletMap.addLayer(this._markerCluster);
         /*var list = document.getElementById('list');
         list.mapTypesProvider = map.mapTypesProvider;*/
         this.fire(MapsGeFacade.READY);
     }
 
+
+    public geoLiveUpdateHandler(): void {
+        var i: number = 0;
+
+        while (i < this.organizations.length) {
+         this.organizations[i].updateMarker();
+            i++;
+        }
+    }
+
+    private _markerCluster: any;
+
+    public locator: ge.mymaps.map.utils.Locator;
     public addOrganization(obj: ge.mymaps.map.data.GeOrganization): ge.mymaps.map.data.GeOrganization
     {
         this.organizations.push(obj);
-        this._map.leafletMap.addLayer(obj.marker)
+        this._markerCluster.addLayer(obj.marker)
         return obj;
     }
 
     public removeOrganization(obj: ge.mymaps.map.data.GeOrganization): ge.mymaps.map.data.GeOrganization {
         this.organizations.splice(this.organizations.indexOf(obj), 1);
-        this._map.leafletMap.removeLayer(obj.marker)
+        this._markerCluster.removeLayer(obj.marker)
         return obj;
     }
 
@@ -56,5 +73,8 @@ class MapsGeFacade extends polymer.Base implements polymer.Element {
             this.removeOrganization(this.organizations[0]);
         }
     }
+
+
+    
 }
 MapsGeFacade.register(); 

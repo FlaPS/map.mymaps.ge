@@ -20,12 +20,21 @@
 
         public geocoder: google.maps.Geocoder = new google.maps.Geocoder();
 
+        /**
+         * Manualy set our current location
+         * @see GEO_LIVE_UPDATE event to handle new lat lng values
+         */
         public updateLocation(lat: number, lng: number): void {
             this.lat = lat;
             this.lng = lng;
             this.dispatchEventWith(Locator.GEO_UPDATE);
             this.updateAdress();
         }
+
+           /**
+         * Update current location
+         * @see GEO_LIVE_UPDATE event to handle new lat lng values
+         */
         public updateLiveLocation(): void {
             function handleNoGeolocation(errorFlag) {
                 if (errorFlag) {
@@ -54,7 +63,7 @@
             this.lat = position.coords.latitude;
             this.lng = position.coords.longitude;
             console.log("live geo updates " + this.lat + ':' + this.lng);
-            //this.dispatchEventWith(LimeGeoData.GEO_UPDATE);
+            this.dispatchEventWith(Locator.GEO_UPDATE);
             this.dispatchEventWith(Locator.GEO_LIVE_UPDATE);
             this.updateAdress();
         }
@@ -85,7 +94,7 @@
 
 
         /**
-         * Request for update adress data about lat and lng
+         * Request for update adress data about current lat and lng
          */
         public updateAdress(): void {
             var scopeT: Locator = this;

@@ -22,6 +22,7 @@ class MapsGeFacade extends polymer.Base implements polymer.Element {
      }
     private gmLoadedHandler():void
     {
+        window['gmloaded'] = function () { };
         this.locator = ge.mymaps.map.utils.Locator.instance;
         this.locator.updateLiveLocation();
         this.locator.addEventListener(ge.mymaps.map.utils.Locator.GEO_LIVE_UPDATE, this.geoLiveUpdateHandler.bind(this));

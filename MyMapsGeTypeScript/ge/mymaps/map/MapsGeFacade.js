@@ -19,19 +19,62 @@ var MapsGeFacade = (function (_super) {
     __extends(MapsGeFacade, _super);
     function MapsGeFacade() {
         _super.apply(this, arguments);
+        this.organizations = [];
     }
+    Object.defineProperty(MapsGeFacade, "READY", {
+        /**
+         * @see L.LatLng  http://leafletjs.com/reference.html#latlng
+         */
+        get: function () { return "facadeReady"; },
+        enumerable: true,
+        configurable: true
+    });
     MapsGeFacade.prototype.attached = function () {
+        console.log(this);
         console.log('maps-ge-facade attached()');
-        window['gmloaded'] = function () {
-            console.log('google maps loaded');
-            console.log('web components ready ');
-            var map = document['getElementById']('mapView');
-            map.initialize();
-            var list = document.getElementById('typesList');
-            list.setMapTypesProvider(map.mapTypesProvider);
-            /*var list = document.getElementById('list');
-            list.mapTypesProvider = map.mapTypesProvider;*/
-        };
+        window['gmloaded'] = this.gmLoadedHandler.bind(this);
+        if (window['google'] && window['google']['maps']) {
+            setTimeout(window['gmloaded'], 200);
+        }
+    };
+    MapsGeFacade.prototype.gmLoadedHandler = function () {
+        window['gmloaded'] = function () { };
+        this.locator = ge.mymaps.map.utils.Locator.instance;
+        this.locator.updateLiveLocation();
+        this.locator.addEventListener(ge.mymaps.map.utils.Locator.GEO_LIVE_UPDATE, this.geoLiveUpdateHandler.bind(this));
+        console.log('google maps loaded');
+        console.log('web components ready ');
+        this._map = document['getElementById']('mapView');
+        this._map.initialize();
+        var list = document.getElementById('typesList');
+        list.setMapTypesProvider(this._map.mapTypesProvider);
+        this._markerCluster = new L['MarkerClusterGroup']();
+        this._map.leafletMap.addLayer(this._markerCluster);
+        /*var list = document.getElementById('list');
+        list.mapTypesProvider = map.mapTypesProvider;*/
+        this.fire(MapsGeFacade.READY);
+    };
+    MapsGeFacade.prototype.geoLiveUpdateHandler = function () {
+        var i = 0;
+        while (i < this.organizations.length) {
+            this.organizations[i].updateMarker();
+            i++;
+        }
+    };
+    MapsGeFacade.prototype.addOrganization = function (obj) {
+        this.organizations.push(obj);
+        this._markerCluster.addLayer(obj.marker);
+        return obj;
+    };
+    MapsGeFacade.prototype.removeOrganization = function (obj) {
+        this.organizations.splice(this.organizations.indexOf(obj), 1);
+        this._markerCluster.removeLayer(obj.marker);
+        return obj;
+    };
+    MapsGeFacade.prototype.clearOrganizations = function () {
+        while (this.organizations.length > 0) {
+            this.removeOrganization(this.organizations[0]);
+        }
     };
     MapsGeFacade = __decorate([
         component("maps-ge-facade"), 

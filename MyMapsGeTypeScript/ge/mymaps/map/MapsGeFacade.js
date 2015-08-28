@@ -20,6 +20,7 @@ var MapsGeFacade = (function (_super) {
     function MapsGeFacade() {
         _super.apply(this, arguments);
         this.organizations = [];
+        this._showMapUI = false;
     }
     Object.defineProperty(MapsGeFacade, "READY", {
         /**
@@ -44,16 +45,23 @@ var MapsGeFacade = (function (_super) {
         this.locator.addEventListener(ge.mymaps.map.utils.Locator.GEO_LIVE_UPDATE, this.geoLiveUpdateHandler.bind(this));
         console.log('google maps loaded');
         console.log('web components ready ');
-        this._map = document['getElementById']('mapView');
-        this._map.initialize();
-        var list = document.getElementById('typesList');
-        list.setMapTypesProvider(this._map.mapTypesProvider);
+        this._mapView = document['getElementById']('mapView');
+        this._mapView.initialize();
+        this.list = document.getElementById('typesList');
+        this.list.setMapTypesProvider(this._mapView.mapTypesProvider);
         this._markerCluster = new L['MarkerClusterGroup']();
-        this._map.leafletMap.addLayer(this._markerCluster);
+        this._mapView.leafletMap.addLayer(this._markerCluster);
         /*var list = document.getElementById('list');
         list.mapTypesProvider = map.mapTypesProvider;*/
         this.fire(MapsGeFacade.READY);
     };
+    Object.defineProperty(MapsGeFacade.prototype, "mapView", {
+        get: function () {
+            return this._mapView;
+        },
+        enumerable: true,
+        configurable: true
+    });
     MapsGeFacade.prototype.geoLiveUpdateHandler = function () {
         var i = 0;
         while (i < this.organizations.length) {
@@ -76,6 +84,26 @@ var MapsGeFacade = (function (_super) {
             this.removeOrganization(this.organizations[0]);
         }
     };
+    Object.defineProperty(MapsGeFacade.prototype, "showMapsUI", {
+        set: function (value) {
+            this._showMapUI = value;
+            if (this.showMapUI) {
+                this.list.style.display = "block;";
+            }
+            else {
+                this.list.style.display = "none;";
+            }
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MapsGeFacade.prototype, "showMapUI", {
+        get: function () {
+            return this._showMapUI;
+        },
+        enumerable: true,
+        configurable: true
+    });
     MapsGeFacade = __decorate([
         component("maps-ge-facade"), 
         __metadata('design:paramtypes', [])

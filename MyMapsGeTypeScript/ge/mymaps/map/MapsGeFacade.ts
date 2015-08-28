@@ -81,17 +81,17 @@ class MapsGeFacade extends polymer.Base implements polymer.Element {
         }
     }
 
-    private _showMapUI: boolean = false;
-    public set showMapsUI(value: boolean)
+    private _showMapUI: boolean = true;
+    public set showMapUI(value: boolean)
     {
         this._showMapUI = value
-        if (this.showMapUI)
+        if (value)
         {
-            this.list.style.display = "block;";
+            this.list.style.display = "block";
         }
         else {
 
-            this.list.style.display = "none;";
+            this.list.style.display = "none";
         }
     }
     public get showMapUI(): boolean {

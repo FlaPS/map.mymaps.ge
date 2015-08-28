@@ -49,7 +49,7 @@ module ge.mymaps.map.view {
             options.zoomControl = false;
             options.minZoom = 4;
             this._map = new L.Map('leafletView',options).setView([41.73558, 44.81495], 11);
-            this._map.on('zoomend', this.zoomendHandler);
+            this._map.on('zoomend', this.zoomendHandler.bind(this));
             this._zoom = 11;
             this._mapTypesProvider = new MapTypesProvider();
 

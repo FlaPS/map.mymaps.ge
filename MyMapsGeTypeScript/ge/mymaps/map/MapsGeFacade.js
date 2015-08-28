@@ -20,7 +20,7 @@ var MapsGeFacade = (function (_super) {
     function MapsGeFacade() {
         _super.apply(this, arguments);
         this.organizations = [];
-        this._showMapUI = false;
+        this._showMapUI = true;
     }
     Object.defineProperty(MapsGeFacade, "READY", {
         /**
@@ -84,22 +84,18 @@ var MapsGeFacade = (function (_super) {
             this.removeOrganization(this.organizations[0]);
         }
     };
-    Object.defineProperty(MapsGeFacade.prototype, "showMapsUI", {
-        set: function (value) {
-            this._showMapUI = value;
-            if (this.showMapUI) {
-                this.list.style.display = "block;";
-            }
-            else {
-                this.list.style.display = "none;";
-            }
-        },
-        enumerable: true,
-        configurable: true
-    });
     Object.defineProperty(MapsGeFacade.prototype, "showMapUI", {
         get: function () {
             return this._showMapUI;
+        },
+        set: function (value) {
+            this._showMapUI = value;
+            if (value) {
+                this.list.style.display = "block";
+            }
+            else {
+                this.list.style.display = "none";
+            }
         },
         enumerable: true,
         configurable: true

@@ -9,7 +9,7 @@ class MapsGeFacade extends polymer.Base implements polymer.Element {
 
     public organizations: Array<ge.mymaps.map.data.GeOrganization> = [];
 
-     private   _map: ge.mymaps.map.view.GeMapView 
+     private   _mapView: ge.mymaps.map.view.GeMapView 
     attached()
     {
         console.log(this);
@@ -20,6 +20,7 @@ class MapsGeFacade extends polymer.Base implements polymer.Element {
             setTimeout(window['gmloaded'], 200);
         }
      }
+     private list: MapTypeList;
     private gmLoadedHandler():void
     {
         window['gmloaded'] = function () { };
@@ -29,21 +30,23 @@ class MapsGeFacade extends polymer.Base implements polymer.Element {
         console.log('google maps loaded');
 
         console.log('web components ready ');
-        this._map = <any>document['getElementById']('mapView');
-        this._map.initialize();
+        this._mapView = <any>document['getElementById']('mapView');
+        this._mapView.initialize();
    
-        var list: MapTypeList = <any>document.getElementById('typesList');
+       this.list = <any>document.getElementById('typesList');
 
-        list.setMapTypesProvider(this._map.mapTypesProvider);
+        this.list.setMapTypesProvider(this._mapView.mapTypesProvider);
   
         this._markerCluster = new L['MarkerClusterGroup']();
-        this._map.leafletMap.addLayer(this._markerCluster);
+        this._mapView.leafletMap.addLayer(this._markerCluster);
         /*var list = document.getElementById('list');
         list.mapTypesProvider = map.mapTypesProvider;*/
         this.fire(MapsGeFacade.READY);
     }
 
-
+    public get mapView(): ge.mymaps.map.view.GeMapView {
+        return this._mapView;
+    }
     public geoLiveUpdateHandler(): void {
         var i: number = 0;
 
@@ -56,6 +59,7 @@ class MapsGeFacade extends polymer.Base implements polymer.Element {
     private _markerCluster: any;
 
     public locator: ge.mymaps.map.utils.Locator;
+
     public addOrganization(obj: ge.mymaps.map.data.GeOrganization): ge.mymaps.map.data.GeOrganization
     {
         this.organizations.push(obj);
@@ -69,13 +73,32 @@ class MapsGeFacade extends polymer.Base implements polymer.Element {
         return obj;
     }
 
-    public clearOrganizations(): void {
-        while (this.organizations.length > 0) {
+    public clearOrganizations(): void
+    {
+        while (this.organizations.length > 0)
+        {
             this.removeOrganization(this.organizations[0]);
         }
     }
 
+    private _showMapUI: boolean = false;
+    public set showMapsUI(value: boolean)
+    {
+        this._showMapUI = value
+        if (this.showMapUI)
+        {
+            this.list.style.display = "block;";
+        }
+        else {
 
+            this.list.style.display = "none;";
+        }
+    }
+    public get showMapUI(): boolean {
+        return this._showMapUI
+    }
+
+    
     
 }
 MapsGeFacade.register(); 

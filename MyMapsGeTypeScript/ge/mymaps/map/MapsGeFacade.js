@@ -49,8 +49,7 @@ var MapsGeFacade = (function (_super) {
         this._mapView.initialize();
         this.list = document.getElementById('typesList');
         this.list.setMapTypesProvider(this._mapView.mapTypesProvider);
-        this._markerCluster = new L['MarkerClusterGroup']();
-        this._mapView.leafletMap.addLayer(this._markerCluster);
+        this._markerCluster = this.mapView.markerCluster;
         /*var list = document.getElementById('list');
         list.mapTypesProvider = map.mapTypesProvider;*/
         this.fire(MapsGeFacade.READY);
@@ -71,6 +70,7 @@ var MapsGeFacade = (function (_super) {
     };
     MapsGeFacade.prototype.addOrganization = function (obj) {
         this.organizations.push(obj);
+        obj.marker['mapObject'] = obj;
         this._markerCluster.addLayer(obj.marker);
         return obj;
     };

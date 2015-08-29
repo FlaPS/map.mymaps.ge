@@ -36,9 +36,8 @@ class MapsGeFacade extends polymer.Base implements polymer.Element {
        this.list = <any>document.getElementById('typesList');
 
         this.list.setMapTypesProvider(this._mapView.mapTypesProvider);
-  
-        this._markerCluster = new L['MarkerClusterGroup']();
-        this._mapView.leafletMap.addLayer(this._markerCluster);
+
+        this._markerCluster = this.mapView.markerCluster;
         /*var list = document.getElementById('list');
         list.mapTypesProvider = map.mapTypesProvider;*/
         this.fire(MapsGeFacade.READY);
@@ -63,6 +62,7 @@ class MapsGeFacade extends polymer.Base implements polymer.Element {
     public addOrganization(obj: ge.mymaps.map.data.GeOrganization): ge.mymaps.map.data.GeOrganization
     {
         this.organizations.push(obj);
+        obj.marker['mapObject'] = obj;
         this._markerCluster.addLayer(obj.marker)
         return obj;
     }

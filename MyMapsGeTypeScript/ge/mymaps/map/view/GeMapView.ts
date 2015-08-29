@@ -1,5 +1,4 @@
 ﻿
-
 module ge.mymaps.map.view {
     @component("ge-map-view")
     export class GeMapView extends polymer.Base implements polymer.Element {
@@ -33,15 +32,20 @@ module ge.mymaps.map.view {
 
         private _layers: Array<L.ILayer> = [];
 
+        private _roundDiv: HTMLElement;
+        private _roundProgress: ru.flaps.uihelpers.RoundProgress;
         attached() {
             console.log('map view attached');
-
-
+            this._roundDiv = <any>document.getElementById('geRoundDiv')
+            this._roundProgress = new ru.flaps.uihelpers.RoundProgress(<any>document.getElementById('geRoundCanvas'));
+         
         }
 
 
         private _locateControl: any;
         private _zoomControl: any;
+
+        private baseLayers: L.FeatureGroup<L.ILayer>;
         public initialize(): void {
             L.Icon.Default.imagePath = 'http://as3.ru/mapge/MyMapsGeTypeScript/components/leaflet';
 
@@ -52,7 +56,8 @@ module ge.mymaps.map.view {
             this._map.on('zoomend', this.zoomendHandler.bind(this));
             this._zoom = 11;
             this._mapTypesProvider = new MapTypesProvider();
-
+            this.baseLayers =  L.featureGroup();
+            this._map.addLayer(this.baseLayers);
        
             this.mapTypesProvider.addEventListener(MapTypesProvider.TYPE_CHANGED, this.mapTypeChanged.bind(this))
             this.mainMapLayer = this.mapTypesProvider.types[0].layer;
@@ -69,15 +74,68 @@ module ge.mymaps.map.view {
             this.geoManager.setOptions({ baselayer: 'google' })
 
 
-
-            this._map.on("mousedown", this.mouseDownHandler);
+         
+            this._map.on('mouseover', this.baseLayerMouseOverHandler.bind(this));
+            this._map.on('mouseout', this.baseLayerMouseOutHandler.bind(this));
+            this.mouseExitBind = this.mouseExitHandler.bind(this);
+            this.mouseDownBind = this.mouseDownHandler.bind(this);
         }
-
+        private baseLayerMouseOverHandler(e: L.LeafletMouseEvent): void
+        {
+            console.log('bind mouseDown');
+            this._map.on("mousedown", this.mouseDownBind);
+        }
+        private baseLayerMouseOutHandler(e: L.LeafletMouseEvent): void {
+            this._map.off("mousedown", this.mouseDownBind);
+            console.log('unbind mouseDown');
+            this.mouseExitHandler(null);
+        }
+        private mouseDownBind: Function;
+        private mouseExitBind: Function;
+        private longPressTimeout: number;
+        private lastMouseDownEvent: L.LeafletMouseEvent;
+        private prevTween: TweenLite;
         private mouseDownHandler(e: L.LeafletMouseEvent): void
         {
-
+            console.log('mouseDown');
+            if (this.prevTween) this.prevTween.kill();
+            this._roundDiv.style.display = 'block';
+            this._roundDiv.style.left = (e.containerPoint.x-25).toString()+'px';
+            this._roundDiv.style.top = (e.containerPoint.y-25).toString() +'px';
+            this._roundProgress.value = 0;
+           this.prevTween = new TweenLite(this._roundProgress, 1, { value: 1 });
+        
+            this._map.on("mouseup", this.mouseExitBind);
+            this._map.on("mousemove", this.mouseExitBind);
+            this._map.on("mouseout", this.mouseExitBind);
+            this.lastMouseDownEvent = e;
+            this.longPressTimeout = setTimeout(this.dispatchLongPress.bind(this), 1000);
         }
-
+        private mouseExitHandler(e: L.LeafletMouseEvent): void {
+            console.log('mouseExit');
+            if (this.prevTween) this.prevTween.kill();
+            this._roundDiv.style.display = 'none';
+            this._map.off("mouseup", this.mouseExitBind);
+            this._map.off("mousemove", this.mouseExitBind);
+            this._map.off("mouseout", this.mouseExitBind);
+            clearTimeout(this.longPressTimeout);
+        }
+        private routing: any;
+        private dispatchLongPress(): void {
+            if (this.prevTween) this.prevTween.kill();
+            console.log('long press dispatched');
+            this.fire(GeMapView.LONG_PRESS, this.lastMouseDownEvent);
+            this.mouseExitHandler(null);
+            if (this.routing != null) this._map.removeControl(this.routing);
+          //  this._map.removeControl
+            this.routing = L['Routing'].control({
+                waypoints: [
+                    L.latLng(ge.mymaps.map.utils.Locator.instance.lat, ge.mymaps.map.utils.Locator.instance.lng),
+                    L.latLng(this.lastMouseDownEvent.latlng.lat, this.lastMouseDownEvent.latlng.lng)
+                ],
+                routeWhileDragging: true
+            }).addTo(this._map);
+        }
 
         private zoomendHandler(e: any): void {
             if (this.zoom != this._map.getZoom()) {
@@ -133,9 +191,9 @@ module ge.mymaps.map.view {
          * Main map type, as a pane at the bottom;
          */
         public set mainMapLayer(layer: L.ILayer) {
-            if (this._mainMapLayer) this._map.removeLayer(this._mainMapLayer);
+            if (this._mainMapLayer) this.baseLayers.removeLayer(this._mainMapLayer);
             this._mainMapLayer = layer;
-            this._map.addLayer(this._mainMapLayer, true);
+            this.baseLayers.addLayer(this._mainMapLayer);
            
 
         }

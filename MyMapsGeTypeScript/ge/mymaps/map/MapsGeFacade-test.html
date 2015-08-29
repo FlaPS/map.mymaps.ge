@@ -15,52 +15,53 @@
     </head>
 
     <body>
-        <div style="width:800px;height:550px; position:absolute; right:150px; top: 0px;">
-            <maps-ge-facade class="facade" id="mapFacade"></maps-ge-facade>
-        </div>
-        <script>
-            function longPressHandler(e)
-            {
-                console.log('Long press emited')
-                console.log(e);
-            }
-            
-            var obj;
-            var mapFacade
-            function fnc() {
-                if (obj == null) {
-                    if (mapFacade == null) {
-                        mapFacade = document.getElementById('mapFacade');
-                        // hide my UI
-                        mapFacade.showMapUI = false;
+     
+            <div style="width:800px;height:550px; position:absolute; right:150px; top: 0px;">
+                <maps-ge-facade class="facade" id="mapFacade"></maps-ge-facade>
+            </div>
+   
+            <script>
+                function longPressHandler(e) {
+                    console.log('Long press emited')
+                    console.log(e);
+                }
 
-                        // get available map types
-                        var mapTypes = mapFacade.mapView.mapTypesProvider.types;
+                var obj;
+                var mapFacade
+                function fnc() {
+                    if (obj == null) {
+                        if (mapFacade == null) {
+                            mapFacade = document.getElementById('mapFacade');
+                            // hide my UI
+                            mapFacade.showMapUI = false;
 
-                        //Every type is an instance of @see https://github.com/FlaPS/map.mymaps.ge/blob/master/MyMapsGeTypeScript/ge/mymaps/map/data/MapType.ts
-                        // set your type into mapView
-                        mapFacade.mapView.mapTypesProvider.mapType = mapTypes[2];
+                            // get available map types
+                            var mapTypes = mapFacade.mapView.mapTypesProvider.types;
 
-                        // change Zoom of map. listen for events to enable/disable your buttons @see https://github.com/FlaPS/map.mymaps.ge/blob/master/MyMapsGeTypeScript/ge/mymaps/map/view/GeMapView.ts
-                        mapFacade.mapView.zoom = 4;
-                        console.log();
-                        mapFacade.addEventListener(ge.mymaps.map.view.GeMapView.LONG_PRESS, longPressHandler)
+                            //Every type is an instance of @see https://github.com/FlaPS/map.mymaps.ge/blob/master/MyMapsGeTypeScript/ge/mymaps/map/data/MapType.ts
+                            // set your type into mapView
+                            mapFacade.mapView.mapTypesProvider.mapType = mapTypes[2];
+
+                            // change Zoom of map. listen for events to enable/disable your buttons @see https://github.com/FlaPS/map.mymaps.ge/blob/master/MyMapsGeTypeScript/ge/mymaps/map/view/GeMapView.ts
+                            mapFacade.mapView.zoom = 4;
+                            console.log();
+                            mapFacade.addEventListener(ge.mymaps.map.view.GeMapView.LONG_PRESS, longPressHandler)
+                        }
+                        var i = 0;
+                        while (i < 100) {
+                            obj = new ge.mymaps.map.data.GeOrganization(i + 1, 'name of orgaization ' + i, 41.5 + Math.random() * 0.5, 44.5 + Math.random() * 0.5)
+                            mapFacade.addOrganization(obj);
+                            i++;
+                        }
                     }
-                    var i = 0;
-                    while (i < 100) {
-                        obj = new ge.mymaps.map.data.GeOrganization(i+1, 'name of orgaization '+i, 41.5 + Math.random() * 0.5, 44.5 + Math.random() * 0.5)
-                        mapFacade.addOrganization(obj);
-                        i++;
+                    else {
+                        obj = null;
+                        mapFacade.clearOrganizations();
                     }
                 }
-                else {
-                    obj = null;
-                    mapFacade.clearOrganizations();
-                }
-            }
-        </script>
-        <div style="position:absolute">
-            <input type="button" value="Switch" onclick="fnc()" />
-        </div>
-    </body>
+            </script>
+            <div style="position:absolute">
+                <input type="button" value="Switch" onclick="fnc()" />
+            </div>
+</body>
  </html>

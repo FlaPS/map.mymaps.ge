@@ -68,6 +68,8 @@ var ge;
                     });
                     GeMapView.prototype.attached = function () {
                         console.log('map view attached');
+                        this._roundDiv = document.getElementById('geRoundDiv');
+                        this._roundProgress = new ru.flaps.uihelpers.RoundProgress(document.getElementById('geRoundCanvas'));
                     };
                     GeMapView.prototype.initialize = function () {
                         L.Icon.Default.imagePath = 'http://as3.ru/mapge/MyMapsGeTypeScript/components/leaflet';
@@ -78,6 +80,8 @@ var ge;
                         this._map.on('zoomend', this.zoomendHandler.bind(this));
                         this._zoom = 11;
                         this._mapTypesProvider = new MapTypesProvider();
+                        this.baseLayers = L.featureGroup();
+                        this._map.addLayer(this.baseLayers);
                         this.mapTypesProvider.addEventListener(MapTypesProvider.TYPE_CHANGED, this.mapTypeChanged.bind(this));
                         this.mainMapLayer = this.mapTypesProvider.types[0].layer;
                         //mapbox plugin @see https://www.mapbox.com/mapbox.js/example/v1.0.0/leaflet-locatecontrol/
@@ -90,9 +94,61 @@ var ge;
                         this.geoManager = new L['GeoManager'](apiKeys);
                         //   this.geoManager.addTo(this._map);
                         this.geoManager.setOptions({ baselayer: 'google' });
-                        this._map.on("mousedown", this.mouseDownHandler);
+                        this._map.on('mouseover', this.baseLayerMouseOverHandler.bind(this));
+                        this._map.on('mouseout', this.baseLayerMouseOutHandler.bind(this));
+                        this.mouseExitBind = this.mouseExitHandler.bind(this);
+                        this.mouseDownBind = this.mouseDownHandler.bind(this);
+                    };
+                    GeMapView.prototype.baseLayerMouseOverHandler = function (e) {
+                        console.log('bind mouseDown');
+                        this._map.on("mousedown", this.mouseDownBind);
+                    };
+                    GeMapView.prototype.baseLayerMouseOutHandler = function (e) {
+                        this._map.off("mousedown", this.mouseDownBind);
+                        console.log('unbind mouseDown');
+                        this.mouseExitHandler(null);
                     };
                     GeMapView.prototype.mouseDownHandler = function (e) {
+                        console.log('mouseDown');
+                        if (this.prevTween)
+                            this.prevTween.kill();
+                        this._roundDiv.style.display = 'block';
+                        this._roundDiv.style.left = (e.containerPoint.x - 25).toString() + 'px';
+                        this._roundDiv.style.top = (e.containerPoint.y - 25).toString() + 'px';
+                        this._roundProgress.value = 0;
+                        this.prevTween = new TweenLite(this._roundProgress, 1, { value: 1 });
+                        this._map.on("mouseup", this.mouseExitBind);
+                        this._map.on("mousemove", this.mouseExitBind);
+                        this._map.on("mouseout", this.mouseExitBind);
+                        this.lastMouseDownEvent = e;
+                        this.longPressTimeout = setTimeout(this.dispatchLongPress.bind(this), 1000);
+                    };
+                    GeMapView.prototype.mouseExitHandler = function (e) {
+                        console.log('mouseExit');
+                        if (this.prevTween)
+                            this.prevTween.kill();
+                        this._roundDiv.style.display = 'none';
+                        this._map.off("mouseup", this.mouseExitBind);
+                        this._map.off("mousemove", this.mouseExitBind);
+                        this._map.off("mouseout", this.mouseExitBind);
+                        clearTimeout(this.longPressTimeout);
+                    };
+                    GeMapView.prototype.dispatchLongPress = function () {
+                        if (this.prevTween)
+                            this.prevTween.kill();
+                        console.log('long press dispatched');
+                        this.fire(GeMapView.LONG_PRESS, this.lastMouseDownEvent);
+                        this.mouseExitHandler(null);
+                        if (this.routing != null)
+                            this._map.removeControl(this.routing);
+                        //  this._map.removeControl
+                        this.routing = L['Routing'].control({
+                            waypoints: [
+                                L.latLng(ge.mymaps.map.utils.Locator.instance.lat, ge.mymaps.map.utils.Locator.instance.lng),
+                                L.latLng(this.lastMouseDownEvent.latlng.lat, this.lastMouseDownEvent.latlng.lng)
+                            ],
+                            routeWhileDragging: true
+                        }).addTo(this._map);
                     };
                     GeMapView.prototype.zoomendHandler = function (e) {
                         if (this.zoom != this._map.getZoom()) {
@@ -136,9 +192,9 @@ var ge;
                          */
                         set: function (layer) {
                             if (this._mainMapLayer)
-                                this._map.removeLayer(this._mainMapLayer);
+                                this.baseLayers.removeLayer(this._mainMapLayer);
                             this._mainMapLayer = layer;
-                            this._map.addLayer(this._mainMapLayer, true);
+                            this.baseLayers.addLayer(this._mainMapLayer);
                         },
                         enumerable: true,
                         configurable: true

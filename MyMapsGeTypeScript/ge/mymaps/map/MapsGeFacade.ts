@@ -94,6 +94,8 @@ class MapsGeFacade extends polymer.Base implements polymer.Element {
             this.list.style.display = "none";
         }
     }
+
+
     public get showMapUI(): boolean {
         return this._showMapUI
     }

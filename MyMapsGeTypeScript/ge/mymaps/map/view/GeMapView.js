@@ -63,9 +63,17 @@ var ge;
                     });
                     Object.defineProperty(GeMapView, "ZOOM_CHANGED", {
                         /**
-                         *
+                         * Zoom of the map was changed
                          */
                         get: function () { return "zoomChanged"; },
+                        enumerable: true,
+                        configurable: true
+                    });
+                    Object.defineProperty(GeMapView, "CENTER_CHANGED", {
+                        /**
+                         * Center of map view was changed
+                         */
+                        get: function () { return "latLngChanged"; },
                         enumerable: true,
                         configurable: true
                     });
@@ -87,7 +95,9 @@ var ge;
                         options.zoomControl = false;
                         options.minZoom = 4;
                         this._map = new L.Map('leafletView', options).setView([41.73558, 44.81495], 11);
+                        this.centerLatLng = L.latLng(41.73558, 44.81495);
                         this._map.on('zoomend', this.zoomendHandler.bind(this));
+                        this._map.on('dragend', this.dragEndHandler.bind(this));
                         this._zoom = 11;
                         this._mapTypesProvider = new MapTypesProvider();
                         this.baseLayers = L.featureGroup();
@@ -118,6 +128,21 @@ var ge;
                         this.markerCluster['on']('clustermouseover', this.baseLayerMouseOutBind);
                         this.markerCluster['on']('clustermouseout', this.baseLayerMouseOverBind);
                         this.baseLayerMouseOverHandler(null);
+                    };
+                    Object.defineProperty(GeMapView.prototype, "centerLatLng", {
+                        get: function () {
+                            return this._map.getCenter();
+                        },
+                        set: function (value) {
+                            this._centerLatLng = value;
+                            this._map.setView(this._centerLatLng);
+                        },
+                        enumerable: true,
+                        configurable: true
+                    });
+                    GeMapView.prototype.dragEndHandler = function (e) {
+                        this.centerLatLng = this._map.getCenter();
+                        this.fire(GeMapView.CENTER_CHANGED, this.centerLatLng);
                     };
                     GeMapView.prototype.markerClickHandler = function (e) {
                         console.log('firing marker press');

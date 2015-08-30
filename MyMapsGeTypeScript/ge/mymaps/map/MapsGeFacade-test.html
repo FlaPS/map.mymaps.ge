@@ -50,7 +50,7 @@
                             console.log();
                             mapFacade.mapView.addEventListener(ge.mymaps.map.view.GeMapView.LONG_PRESS, longPressHandler)
                             mapFacade.mapView.addEventListener(ge.mymaps.map.view.GeMapView.MARKER_PRESS, markerPressHandler)
-
+                            setTimeout(changeLocation, 2000)
                         }
                         var i = 0;
                         while (i < 100) {
@@ -63,6 +63,15 @@
                         obj = null;
                         mapFacade.clearOrganizations();
                     }
+                }
+                function centerChangedHandler()
+                {
+                    console.log('center now is ' + mapFacade.mapView.centerLatLng.lat + ':' + mapFacade.mapView.centerLatLng.lng);
+                }
+                function changeLocation()
+                {
+                    mapFacade.mapView.addEventListener(ge.mymaps.map.view.GeMapView.CENTER_CHANGED, centerChangedHandler);
+                    mapFacade.mapView.centerLatLng = { lat: 45, lng: 45 };
                 }
             </script>
             <div style="position:absolute">

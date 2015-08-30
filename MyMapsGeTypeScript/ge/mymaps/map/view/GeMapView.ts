@@ -26,9 +26,14 @@ module ge.mymaps.map.view {
 
 
         /**
-         *
+         * Zoom of the map was changed
          */ 
         public static get ZOOM_CHANGED(): string { return "zoomChanged"; }
+
+        /**
+         * Center of map view was changed
+         */
+        public static get CENTER_CHANGED(): string { return "latLngChanged"; }
         // public static get CHANGE_MAP_TYPE(): string { return "changeMapType"; }
 
 
@@ -60,8 +65,11 @@ module ge.mymaps.map.view {
             var options: L.MapOptions = {}
             options.zoomControl = false;
             options.minZoom = 4;
-            this._map = new L.Map('leafletView',options).setView([41.73558, 44.81495], 11);
+           
+            this._map = new L.Map('leafletView', options).setView([41.73558, 44.81495], 11);
+            this.centerLatLng = L.latLng( 41.73558, 44.81495 );
             this._map.on('zoomend', this.zoomendHandler.bind(this));
+            this._map.on('dragend', this.dragEndHandler.bind(this));
             this._zoom = 11;
             this._mapTypesProvider = new MapTypesProvider();
             this.baseLayers = L.featureGroup();
@@ -74,9 +82,9 @@ module ge.mymaps.map.view {
             L.control['locate']().addTo(this._map);
 
             var apiKeys = {
-                'bing': 'AnRvpIKUSa29ARhk7djgoB5NjakSkchyrtlEqozjs3cAzwJ5s2SnJ7VAKhW2RVAC'
-                , 'wikimapia': '60175C48-4B0C86C-A2D4D106-A5F37CAF-5A760C96-45526DF2-6D90C63B-511E68EE'
-                , 'google': 'AIzaSyAGo33r6UECbDAJV63G20ULh6RtyzKBkXc'
+                    'bing': 'AnRvpIKUSa29ARhk7djgoB5NjakSkchyrtlEqozjs3cAzwJ5s2SnJ7VAKhW2RVAC'
+                ,   'wikimapia': '60175C48-4B0C86C-A2D4D106-A5F37CAF-5A760C96-45526DF2-6D90C63B-511E68EE'
+                ,   'google': 'AIzaSyAGo33r6UECbDAJV63G20ULh6RtyzKBkXc'
             };
           /*  this.geoManager = new L['GeoManager'](apiKeys);
          //   this.geoManager.addTo(this._map);
@@ -97,6 +105,18 @@ module ge.mymaps.map.view {
 
         }
 
+        private _centerLatLng: L.LatLng;
+        public get centerLatLng(): L.LatLng {
+            return this._map.getCenter();
+        }
+        public set centerLatLng(value: L.LatLng) {
+            this._centerLatLng = value;
+            this._map.setView(this._centerLatLng);
+        }
+        private dragEndHandler(e: L.LeafletDragEndEvent) {
+            this.centerLatLng = this._map.getCenter();
+            this.fire(GeMapView.CENTER_CHANGED, this.centerLatLng);
+        }
         private markerClickHandler(e: L.LeafletMouseEvent) {
             console.log('firing marker press');
             this.fire(GeMapView.MARKER_PRESS, e['layer']['mapObject']);

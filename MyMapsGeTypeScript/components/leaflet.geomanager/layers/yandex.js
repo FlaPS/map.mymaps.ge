@@ -108,7 +108,7 @@ L.Yandex = L.Class.extend({
 					this._initMapObject, this);
 			}
 
-		var map = new ymaps.Map(this._container, {center: [0,0], zoom: 0, behaviors: []});
+		var map = new ymaps.Map(this._container, {center: [0,0], zoom: 0, behaviors: [], controls:[]});
 
 		if (this.options.traffic)
 			map.controls.add(new ymaps.control.TrafficControl({shown: true}));

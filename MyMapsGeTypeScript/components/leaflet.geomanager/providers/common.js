@@ -21,7 +21,7 @@ L.GeoManager.APILoaders = {
         var dfd = new jQuery.Deferred();
 
         if (typeof ymaps === 'undefined') {
-            $.getScript('http://api-maps.yandex.ru/2.0/?load=package.map&lang=' + (window.navigator.userLanguage || window.navigator.language), function() {
+            $.getScript('http://api-maps.yandex.ru/2.1/?load=package.map&lang=' + (window.navigator.userLanguage || window.navigator.language), function() {
                 dfd.resolve()
             });
         } else dfd.resolve();

@@ -11,7 +11,10 @@ module ge.mymaps.map.utils {
         public static get START_CHANGED():string {return 'START_CHANGED'};
 
 
-        public static get END_CHANGED():string {return 'END_CHANGED'};
+        public static get END_CHANGED(): string { return 'END_CHANGED' };
+
+        public static get CALCULATED(): string { return 'calculated' };
+
         constructor()
         {
             super();
@@ -59,10 +62,17 @@ module ge.mymaps.map.utils {
          *
          * Available to build route path
          */
-        public available():boolean
+        public isAvailable():boolean
         {
            return this.start != null && this.end != null
         }
 
+
+
+
+        public calculate(): void
+        {
+
+        }
     }
 }

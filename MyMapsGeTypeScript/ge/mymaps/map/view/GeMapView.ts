@@ -78,8 +78,8 @@ module ge.mymaps.map.view {
        
             this.mapTypesProvider.addEventListener(MapTypesProvider.TYPE_CHANGED, this.mapTypeChanged.bind(this))
             this.mainMapLayer = this.mapTypesProvider.types[0].layer;
-            //mapbox plugin @see https://www.mapbox.com/mapbox.js/example/v1.0.0/leaflet-locatecontrol/
-            L.control['locate']().addTo(this._map);
+            //mapbox plugin @see https://www.mapbox.com/mapbox.js/example/v1.0.0/leaflet-locatecontrol/  ;
+            //L.control['locate']().addTo(this._map);
 
             var apiKeys = {
                     'bing': 'AnRvpIKUSa29ARhk7djgoB5NjakSkchyrtlEqozjs3cAzwJ5s2SnJ7VAKhW2RVAC'
@@ -164,6 +164,8 @@ module ge.mymaps.map.view {
             this._map.off("mouseup", this.mouseExitBind);
             this._map.off("dragstart", this.mouseExitBind);
             this._map.off("mouseout", this.mouseExitBind);
+          ///  var dir: google.maps.DirectionsResult;
+           
             clearTimeout(this.longPressTimeout);
            // console.log(e.type);
         }

@@ -53,9 +53,11 @@
                             // change Zoom of map. listen for events to enable/disable your buttons @see https://github.com/FlaPS/map.mymaps.ge/blob/master/MyMapsGeTypeScript/ge/mymaps/map/view/GeMapView.ts
                             mapFacade.mapView.zoom = 4;
                             console.log();
+              
                             mapFacade.mapView.addEventListener(ge.mymaps.map.view.GeMapView.LONG_PRESS, longPressHandler)
                             mapFacade.mapView.addEventListener(ge.mymaps.map.view.GeMapView.MARKER_PRESS, markerPressHandler)
-                            setTimeout(changeLocation, 2000)
+                         //   setTimeout(changeLocation, 2000)
+                            ge.mymaps.map.utils.Locale.instance.language = ge.mymaps.map.utils.Locale.GE;
                         }
                         var i = 0;
                         while (i < 100) {

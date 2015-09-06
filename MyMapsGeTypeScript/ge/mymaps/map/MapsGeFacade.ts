@@ -39,6 +39,7 @@ class MapsGeFacade extends polymer.Base implements polymer.Element {
         this.list.setMapTypesProvider(this._mapView.mapTypesProvider);
 
         this._markerCluster = this.mapView.markerCluster;
+        this.showMapUI = false;
         /*var list = document.getElementById('list');
         list.mapTypesProvider = map.mapTypesProvider;*/
         this.fire(MapsGeFacade.READY);

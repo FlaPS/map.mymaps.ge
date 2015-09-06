@@ -28,12 +28,12 @@ var ru;
                 };
                 EventDispatcher.prototype.dispatchEventWith = function (key, dataObj) {
                     if (dataObj === void 0) { dataObj = {}; }
-                    console.log("Dispatching " + key);
+                    // console.log("Dispatching " + key);
                     if (this._events.hasOwnProperty(key)) {
                         dataObj = dataObj || {};
                         dataObj.currentTarget = this;
                         for (var i in this._events[key]) {
-                            console.log("Handler found for " + key);
+                            //   console.log("Handler found for " + key);
                             this._events[key][i](dataObj);
                         }
                     }

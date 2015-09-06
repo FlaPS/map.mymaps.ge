@@ -1,31 +1,19 @@
 ﻿module ge.mymaps.map.data {
-    export class GeOrganization extends ge.mymaps.map.data.GeMapObject {
+    export class GeOrganization extends ge.mymaps.map.data.MarkerMapObject {
         constructor(
-            
+
             id: number = -1,
             name: string = '',
-            public lat: number = 0,
-            public lng: number = 0
+            lat: number = 0,
+            lng: number = 0
             ) {
-            super(id, name);
-            this.latLng = L.latLng(lat, lng);
-            this._marker = L.marker(this.latLng);
-               this.updateMarker();
-        }
-        public latLng: L.LatLng;
-        private _marker: L.Marker;
-        public get marker(): L.Marker {
-            return this._marker
+            super( lat, lng);
         }
         public distance: number;
-        public updateMarker(): void {
+        public updateMarker():void {
+            super.updateMarker()
             this.distance = ge.mymaps.map.utils.Locator.instance.getDistanceTo(this.lat, this.lng);
-            this._marker.setLatLng(this.latLng);
-            this._marker.bindPopup(this.name + ' <br/>distance:' + Math.ceil(this.distance) + ' метров');
-        
-          //  var icon: L.Icon
-            this._marker.setIcon(new L.Icon.Default());
-            this._marker.update();
+            this.marker.bindPopup(this.name + ' <br/>distance:' + Math.ceil(this.distance) + ' метров');
         }
     }
 }

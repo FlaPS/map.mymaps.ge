@@ -6,11 +6,12 @@ module ge.mymaps.map.layers {
      * ei. ge.mymaps.map.utils.Locator.instacne.updateLocation();
      * ge.mymaps.map.utils.Locator.instacne.addEventListener(ge.mymaps.map.utils.Locator.GEO_UPDATE, geoUpdateEvetHandler
      */
-    export class Locator extends ru.flaps.events.EventDispatcher {
-
+    export class LocatorMarker extends ge.mymaps.map.data.GeMapObject
+    {
+    
         /**
          * Singleton's instance
          */
-
+        
     }
 }

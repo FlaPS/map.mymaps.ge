@@ -1,7 +1,8 @@
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    __.prototype = b.prototype;
+    d.prototype = new __();
 };
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") return Reflect.decorate(decorators, target, key, desc);
@@ -10,6 +11,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
         case 3: return decorators.reduceRight(function(o, d) { return (d && d(target, key)), void 0; }, void 0);
         case 4: return decorators.reduceRight(function(o, d) { return (d && d(target, key, o)) || o; }, desc);
     }
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var ge;
 (function (ge) {
@@ -142,7 +146,7 @@ var ge;
                     };
                     GeMapView.prototype.markerClickHandler = function (e) {
                         console.log('firing marker press');
-                        this.fire(GeMapView.MARKER_PRESS, e['layer']['mapObject']);
+                        this.fire(GeMapView.MARKER_PRESS, new ge.mymaps.map.events.MarkerPressDetail(this.lastMouseDownEvent.latlng, e.target['mapObject']));
                     };
                     GeMapView.prototype.baseLayerMouseOverHandler = function (e) {
                         //      console.log('bind mouseDown');
@@ -163,26 +167,29 @@ var ge;
                         this._roundProgress.value = 0;
                         this.prevTween = new TweenLite(this._roundProgress, 1, { value: 1 });
                         this._map.on("mouseup", this.mouseExitBind);
-                        this._map.on("mousemove", this.mouseExitBind);
+                        this._map.on("dragstart", this.mouseExitBind);
                         this._map.on("mouseout", this.mouseExitBind);
                         this.lastMouseDownEvent = e;
                         this.longPressTimeout = setTimeout(this.dispatchLongPress.bind(this), 1000);
                     };
                     GeMapView.prototype.mouseExitHandler = function (e) {
+                        if (e === void 0) { e = null; }
                         console.log('mouseExit');
                         if (this.prevTween)
                             this.prevTween.kill();
                         this._roundDiv.style.display = 'none';
                         this._map.off("mouseup", this.mouseExitBind);
-                        this._map.off("mousemove", this.mouseExitBind);
+                        this._map.off("dragstart", this.mouseExitBind);
                         this._map.off("mouseout", this.mouseExitBind);
                         clearTimeout(this.longPressTimeout);
+                        // console.log(e.type);
                     };
                     GeMapView.prototype.dispatchLongPress = function () {
                         if (this.prevTween)
                             this.prevTween.kill();
                         console.log('long press dispatched');
-                        this.fire(GeMapView.LONG_PRESS, this.lastMouseDownEvent.latlng);
+                        this.fire(GeMapView.LONG_PRESS, new ge.mymaps.map.events.LongPressDetail(this.lastMouseDownEvent.latlng));
+                        this.mouseExitHandler();
                     };
                     GeMapView.prototype.buildRouteTo = function (lat, lng) {
                         this.mouseExitHandler(null);
@@ -291,7 +298,8 @@ var ge;
                         configurable: true
                     });
                     GeMapView = __decorate([
-                        component("ge-map-view")
+                        component("ge-map-view"), 
+                        __metadata('design:paramtypes', [])
                     ], GeMapView);
                     return GeMapView;
                 })(polymer.Base);

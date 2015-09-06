@@ -119,7 +119,8 @@ module ge.mymaps.map.view {
         }
         private markerClickHandler(e: L.LeafletMouseEvent) {
             console.log('firing marker press');
-            this.fire(GeMapView.MARKER_PRESS, e['layer']['mapObject']);
+            
+            this.fire(GeMapView.MARKER_PRESS, new ge.mymaps.map.events.MarkerPressDetail(this.lastMouseDownEvent.latlng, e.target['mapObject']));
         }
         public markerCluster: any;
         private baseLayerMouseOverBind: Function;
@@ -150,26 +151,29 @@ module ge.mymaps.map.view {
            this.prevTween = new TweenLite(this._roundProgress, 1, { value: 1 });
         
             this._map.on("mouseup", this.mouseExitBind);
-            this._map.on("mousemove", this.mouseExitBind);
+            this._map.on("dragstart", this.mouseExitBind);
             this._map.on("mouseout", this.mouseExitBind);
             this.lastMouseDownEvent = e;
             this.longPressTimeout = setTimeout(this.dispatchLongPress.bind(this), 1000);
         }
-        private mouseExitHandler(e: L.LeafletMouseEvent): void {
+        private mouseExitHandler(e: L.LeafletMouseEvent = null): void {
+
             console.log('mouseExit');
             if (this.prevTween) this.prevTween.kill();
             this._roundDiv.style.display = 'none';
             this._map.off("mouseup", this.mouseExitBind);
-            this._map.off("mousemove", this.mouseExitBind);
+            this._map.off("dragstart", this.mouseExitBind);
             this._map.off("mouseout", this.mouseExitBind);
             clearTimeout(this.longPressTimeout);
+           // console.log(e.type);
         }
         private routing: any;
         private dispatchLongPress(): void {
             if (this.prevTween) this.prevTween.kill();
+       
             console.log('long press dispatched');
-            this.fire(GeMapView.LONG_PRESS, this.lastMouseDownEvent.latlng);
-
+            this.fire(GeMapView.LONG_PRESS, new ge.mymaps.map.events.LongPressDetail(this.lastMouseDownEvent.latlng));
+            this.mouseExitHandler();
         }
         public buildRouteTo(lat, lng)
         {

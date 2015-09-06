@@ -89,9 +89,7 @@
         public updateLiveLocation(): void {
           
             if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(this.handleLiveLocation.bind(this), function () {
-                    this.handleNoGeolocation(true);
-                });
+                navigator.geolocation.getCurrentPosition(this.handleLiveLocation.bind(this));
             } else {
                 // Browser doesn't support Geolocation
                 this.handleNoGeolocation(false);
@@ -171,7 +169,8 @@
          */
         private successHandler(data): void {
 
-            var geocoderResult: google.maps.GeocoderResult = data.results[0];
+            var geocoderResult: google.maps.GeocoderResult = data.results[0]
+           
             this.faultAddress = false;
             this.address = geocoderResult.formatted_address;
             this.geocoderResult = geocoderResult;

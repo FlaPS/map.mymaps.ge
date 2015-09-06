@@ -2,6 +2,7 @@
 class MapsGeFacade extends polymer.Base implements polymer.Element {
 
     /**
+     * Entrie map ready event. Use one to hide default UI and set initial layers
      * @see L.LatLng      http://leafletjs.com/reference.html#latlng
      */
     public static get READY(): string { return "facadeReady"; }
@@ -9,7 +10,7 @@ class MapsGeFacade extends polymer.Base implements polymer.Element {
 
     public organizations: Array<ge.mymaps.map.data.GeOrganization> = [];
 
-     private   _mapView: ge.mymaps.map.view.GeMapView
+    private _mapView: ge.mymaps.map.view.GeMapView
     attached()
     {
         console.log(this);

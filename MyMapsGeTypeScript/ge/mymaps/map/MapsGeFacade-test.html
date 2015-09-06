@@ -22,12 +22,17 @@
    
             <script>
                 function longPressHandler(e) {
-                    console.log('Long press emited')
-                    console.log(e.detail.lat+':'+e.detail.lng);
+                    console.log('Long press emited '+e.detail)
+                    console.log(e.detail.lat + ':' + e.detail.lng);
+                    e.detail.geocoder.addEventListener(ge.mymaps.map.utils.Geocoder.UPDATE,
+                 function (e) {
+                     console.log(e.currentTarget.googleAddress)
+                 })
                 }
                 function markerPressHandler(e) {
                     console.log('Marker press emited')
-                    console.log(e.detail.lat + ':' + e.detail.lng + '    -  ' + e.detail.distance); //e.details is ge.mymaps.map.data.GeOrganization
+                    console.log(e.detail.latLng.lat + ':' + e.detail.latLng.lng + '    -  ' + e.detail.mapObjcet.distance); //e.details is ge.mymaps.map.data.GeOrganization
+             
                 }
                 var obj;
                 var mapFacade

@@ -2,19 +2,19 @@
 class MapsGeFacade extends polymer.Base implements polymer.Element {
 
     /**
-     * @see L.LatLng  http://leafletjs.com/reference.html#latlng
+     * @see L.LatLng      http://leafletjs.com/reference.html#latlng
      */
     public static get READY(): string { return "facadeReady"; }
 
 
     public organizations: Array<ge.mymaps.map.data.GeOrganization> = [];
 
-     private   _mapView: ge.mymaps.map.view.GeMapView 
+     private   _mapView: ge.mymaps.map.view.GeMapView
     attached()
     {
         console.log(this);
         console.log('maps-ge-facade attached()');
-        
+
         window['gmloaded'] = this.gmLoadedHandler.bind(this);
         if (window['google'] && window['google']['maps']) {
             setTimeout(window['gmloaded'], 200);
@@ -32,7 +32,7 @@ class MapsGeFacade extends polymer.Base implements polymer.Element {
         console.log('web components ready ');
         this._mapView = <any>document['getElementById']('mapView');
         this._mapView.initialize();
-   
+
        this.list = <any>document.getElementById('typesList');
 
         this.list.setMapTypesProvider(this._mapView.mapTypesProvider);
@@ -100,7 +100,7 @@ class MapsGeFacade extends polymer.Base implements polymer.Element {
         return this._showMapUI
     }
 
-    
-    
+
+
 }
-MapsGeFacade.register(); 
+MapsGeFacade.register();

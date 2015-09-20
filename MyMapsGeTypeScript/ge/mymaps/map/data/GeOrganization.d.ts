@@ -1,11 +1,7 @@
+/// <reference path="MarkerMapObject.d.ts" />
 declare module ge.mymaps.map.data {
-    class GeOrganization extends ge.mymaps.map.data.GeMapObject {
-        lat: number;
-        lng: number;
+    class GeOrganization extends ge.mymaps.map.data.MarkerMapObject {
         constructor(id?: number, name?: string, lat?: number, lng?: number);
-        latLng: L.LatLng;
-        private _marker;
-        marker: L.Marker;
         distance: number;
         updateMarker(): void;
     }

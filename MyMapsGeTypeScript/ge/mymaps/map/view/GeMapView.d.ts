@@ -1,3 +1,4 @@
+/// <reference path="../../../../ru/flaps/uihelpers/RoundProgress.d.ts" />
 declare module ge.mymaps.map.view {
     class GeMapView extends polymer.Base implements polymer.Element {
         /**

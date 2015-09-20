@@ -1,8 +1,7 @@
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") return Reflect.decorate(decorators, target, key, desc);
@@ -32,6 +31,7 @@ var MapsGeFacade = (function (_super) {
         configurable: true
     });
     MapsGeFacade.prototype.attached = function () {
+        new ge.mymaps.map.data.GeOrganization();
         console.log(this);
         console.log('maps-ge-facade attached()');
         window['gmloaded'] = this.gmLoadedHandler.bind(this);
@@ -51,6 +51,7 @@ var MapsGeFacade = (function (_super) {
         this.list = document.getElementById('typesList');
         this.list.setMapTypesProvider(this._mapView.mapTypesProvider);
         this._markerCluster = this.mapView.markerCluster;
+        this.showMapUI = false;
         /*var list = document.getElementById('list');
         list.mapTypesProvider = map.mapTypesProvider;*/
         this.fire(MapsGeFacade.READY);

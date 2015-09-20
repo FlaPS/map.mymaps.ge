@@ -1,8 +1,7 @@
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") return Reflect.decorate(decorators, target, key, desc);
@@ -161,7 +160,7 @@ var CarouselHeader = (function (_super) {
             observe("hasVideo,hasPhoto,intensity,age"), 
             __metadata('design:type', Function), 
             __metadata('design:paramtypes', [Object, Object, Object, Object]), 
-            __metadata('design:returntype', Object)
+            __metadata('design:returntype', void 0)
         ], CarouselHeader.prototype, "conditionsChanged", Object.getOwnPropertyDescriptor(CarouselHeader.prototype, "conditionsChanged")));
     CarouselHeader = __decorate([
         component("carousel-header"), 

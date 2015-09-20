@@ -1,8 +1,7 @@
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") return Reflect.decorate(decorators, target, key, desc);
@@ -15,6 +14,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+///<reference path="../../../../ru/flaps/uihelpers/RoundProgress.ts" />
 var ge;
 (function (ge) {
     var mymaps;
@@ -105,8 +105,8 @@ var ge;
                         this._map.addLayer(this.baseLayers);
                         this.mapTypesProvider.addEventListener(MapTypesProvider.TYPE_CHANGED, this.mapTypeChanged.bind(this));
                         this.mainMapLayer = this.mapTypesProvider.types[0].layer;
-                        //mapbox plugin @see https://www.mapbox.com/mapbox.js/example/v1.0.0/leaflet-locatecontrol/
-                        L.control['locate']().addTo(this._map);
+                        //mapbox plugin @see https://www.mapbox.com/mapbox.js/example/v1.0.0/leaflet-locatecontrol/  ;
+                        //L.control['locate']().addTo(this._map);
                         var apiKeys = {
                             'bing': 'AnRvpIKUSa29ARhk7djgoB5NjakSkchyrtlEqozjs3cAzwJ5s2SnJ7VAKhW2RVAC',
                             'wikimapia': '60175C48-4B0C86C-A2D4D106-A5F37CAF-5A760C96-45526DF2-6D90C63B-511E68EE',
@@ -181,6 +181,7 @@ var ge;
                         this._map.off("mouseup", this.mouseExitBind);
                         this._map.off("dragstart", this.mouseExitBind);
                         this._map.off("mouseout", this.mouseExitBind);
+                        ///  var dir: google.maps.DirectionsResult;
                         clearTimeout(this.longPressTimeout);
                         // console.log(e.type);
                     };

@@ -1,4 +1,5 @@
-﻿module ge.mymaps.map.data {
+﻿///<reference path="MarkerMapObject.ts"/>
+module ge.mymaps.map.data {
     export class GeOrganization extends ge.mymaps.map.data.MarkerMapObject {
         constructor(
 

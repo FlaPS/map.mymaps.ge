@@ -7,7 +7,7 @@
      * ge.mymaps.map.utils.Locator.instacne.addEventListener(ge.mymaps.map.utils.Locator.GEO_UPDATE, geoUpdateEvetHandler
      */
     export class Locator extends ru.flaps.events.EventDispatcher {
-
+        
         /**
          * Singleton's instance
          */
@@ -69,6 +69,7 @@
         /**
          *  instace of google's geocoder
          */
+        
         public geocoder: google.maps.Geocoder = new google.maps.Geocoder();
 
         /**

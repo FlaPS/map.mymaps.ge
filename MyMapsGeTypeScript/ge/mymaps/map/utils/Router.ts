@@ -1,4 +1,4 @@
-///<reference path="../../../../ru/flaps/events/EventDispatcher"/>
+///<reference path="../../../../ru/flaps/events/EventDispatcher.ts"/>
 module ge.mymaps.map.utils {
 
     /***

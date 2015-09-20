@@ -1,4 +1,5 @@
-﻿ module ge.mymaps.map.data {
+﻿///<reference path="../../../../ru/flaps/events/EventDispatcher.ts"/>
+module ge.mymaps.map.data {
     export class GeMapObject extends ru.flaps.events.EventDispatcher
     {
         constructor(

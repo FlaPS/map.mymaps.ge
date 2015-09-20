@@ -1,4 +1,4 @@
-﻿
+﻿///<reference path="../../../../ru/flaps/uihelpers/RoundProgress.ts" />
 module ge.mymaps.map.view {
     @component("ge-map-view")
     export class GeMapView extends polymer.Base implements polymer.Element {

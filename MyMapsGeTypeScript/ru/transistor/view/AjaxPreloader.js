@@ -1,8 +1,7 @@
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") return Reflect.decorate(decorators, target, key, desc);
@@ -22,6 +21,7 @@ var AjaxPreloader = (function (_super) {
         _super.apply(this, arguments);
     }
     AjaxPreloader = __decorate([
+        /// <reference path="../model/ItemVO.ts" />
         component("ajax-preloader"), 
         __metadata('design:paramtypes', [])
     ], AjaxPreloader);

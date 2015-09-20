@@ -21,6 +21,8 @@
             </div>
    
             <script>
+                var mapFacade = document.getElementById('mapFacade');
+                mapFacade.addEventListener(ge.mymaps.map.MapsGeFacade.READY, console.log)
                 function longPressHandler(e) {
                     console.log('Long press emited '+e.detail)
                     console.log(e.detail.lat + ':' + e.detail.lng);

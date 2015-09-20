@@ -31,7 +31,7 @@ var MapsGeFacade = (function (_super) {
         configurable: true
     });
     MapsGeFacade.prototype.attached = function () {
-        new ge.mymaps.map.data.GeOrganization();
+        //new ge.mymaps.map.data.GeOrganization()
         console.log(this);
         console.log('maps-ge-facade attached()');
         window['gmloaded'] = this.gmLoadedHandler.bind(this);

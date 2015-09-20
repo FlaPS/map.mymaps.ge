@@ -13,7 +13,7 @@ class MapsGeFacade extends polymer.Base implements polymer.Element {
     private _mapView: ge.mymaps.map.view.GeMapView
     attached()
     {
-        new ge.mymaps.map.data.GeOrganization()
+        //new ge.mymaps.map.data.GeOrganization()
         console.log(this);
         console.log('maps-ge-facade attached()');
 

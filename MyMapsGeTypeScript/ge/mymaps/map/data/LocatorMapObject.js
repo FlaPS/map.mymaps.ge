@@ -26,7 +26,11 @@ var ge;
                         _super.call(this, lat, lng);
                         this.iconUrl = "http://www.primehomes.lk/images/map_man.gif";
                         this.iconRetinaUrl = "http://www.primehomes.lk/images/map_man.gif";
+                        this.marker.on('add', this.addHandler.bind(this));
                     }
+                    LocatorMapObject.prototype.addHandler = function (e) {
+                        this.marker.dragging.enable();
+                    };
                     return LocatorMapObject;
                 })(ge.mymaps.map.data.MarkerMapObject);
                 data.LocatorMapObject = LocatorMapObject;

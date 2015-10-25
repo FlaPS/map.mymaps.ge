@@ -13,9 +13,15 @@ module ge.mymaps.map.data {
             super(lat, lng)
             this.iconUrl = "http://www.primehomes.lk/images/map_man.gif"
             this.iconRetinaUrl = "http://www.primehomes.lk/images/map_man.gif"
+            this.marker.on('add', this.addHandler.bind(this))
+        }
+
+        private addHandler(e: any): void {
+            this.marker.dragging.enable()
         }
 
         /**
+
          * Singleton's instance
          */
         

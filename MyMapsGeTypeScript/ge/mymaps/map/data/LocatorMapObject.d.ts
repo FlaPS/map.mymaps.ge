@@ -8,5 +8,6 @@ declare module ge.mymaps.map.data {
      */
     class LocatorMapObject extends ge.mymaps.map.data.MarkerMapObject {
         constructor(lat?: number, lng?: number);
+        private addHandler(e);
     }
 }

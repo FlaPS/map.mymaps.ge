@@ -43,5 +43,6 @@
             this._marker.setIcon(icon);
             this._marker.update();
         }
+    
     }
 }

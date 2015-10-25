@@ -37,6 +37,7 @@ declare module ge.mymaps.map.view {
         private _zoomControl;
         private baseLayers;
         private clickGroup;
+        private list;
         initialize(): void;
         private _centerLatLng;
         centerLatLng: L.LatLng;

@@ -14,6 +14,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+///<reference path="utils/Locator.ts" />
+///<reference path="data/LocatorMapObject.ts" />
 var ge;
 (function (ge) {
     var mymaps;
@@ -26,6 +28,7 @@ var ge;
                     _super.apply(this, arguments);
                     this.organizations = [];
                     this._showMapUI = true;
+                    this.locatorMarker = new ge.mymaps.map.data.LocatorMapObject();
                 }
                 Object.defineProperty(MapsGeFacade, "READY", {
                     /**
@@ -42,9 +45,10 @@ var ge;
                     console.log('maps-ge-facade attached()');
                     window['gmloaded'] = this.gmLoadedHandler.bind(this);
                     if (window['google'] && window['google']['maps']) {
-                        setTimeout(window['gmloaded'], 500);
+                        setTimeout(window['gmloaded'], 1000);
                     }
                 };
+                // private list: MapTypeList;
                 MapsGeFacade.prototype.gmLoadedHandler = function () {
                     window['gmloaded'] = function () { };
                     this.locator = ge.mymaps.map.utils.Locator.instance;
@@ -54,8 +58,8 @@ var ge;
                     console.log('web components ready ');
                     this._mapView = document['getElementById']('mapView');
                     this._mapView.initialize();
-                    this.list = document.getElementById('typesList');
-                    this.list.setMapTypesProvider(this._mapView.mapTypesProvider);
+                    // this.list = <any>document.getElementById('typesList');
+                    // this.list.setMapTypesProvider(this._mapView.mapTypesProvider);
                     this._markerCluster = this.mapView.markerCluster;
                     this.showMapUI = false;
                     /*var list = document.getElementById('list');
@@ -99,15 +103,26 @@ var ge;
                     set: function (value) {
                         this._showMapUI = value;
                         if (value) {
-                            this.list.style.display = "block";
                         }
                         else {
-                            this.list.style.display = "none";
                         }
                     },
                     enumerable: true,
                     configurable: true
                 });
+                MapsGeFacade.prototype.moveToLocation = function () {
+                    ge.mymaps.map.utils.Locator.instance.once(ge.mymaps.map.utils.Locator.GEO_LIVE_UPDATE, this.moveMapToGeoLiveUpdateHandler.bind(this));
+                    ge.mymaps.map.utils.Locator.instance.updateLiveLocation();
+                };
+                MapsGeFacade.prototype.moveMapToGeoLiveUpdateHandler = function (e) {
+                    console.log("move map to current user's location");
+                    this.mapView.leafletMap.setView(ge.mymaps.map.utils.Locator.instance.latLng);
+                    this.mapView.leafletMap.addLayer(this.locatorMarker.marker);
+                    this.locatorMarker.lat = ge.mymaps.map.utils.Locator.instance.lat;
+                    this.locatorMarker.lng = ge.mymaps.map.utils.Locator.instance.lng;
+                    this.mapView.centerLatLng = this.locatorMarker.latLng;
+                    this.locatorMarker.updateMarker();
+                };
                 MapsGeFacade = __decorate([
                     component("maps-ge-facade"), 
                     __metadata('design:paramtypes', [])

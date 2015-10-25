@@ -87,6 +87,7 @@ var ge;
                     GeMapView.prototype.attached = function () {
                         console.log('map view attached');
                         this._roundDiv = document.getElementById('geRoundDiv');
+                        //this.list = <any>document.getElementById('list')
                         this._roundProgress = new ru.flaps.uihelpers.RoundProgress(document.getElementById('geRoundCanvas'));
                     };
                     GeMapView.prototype.initialize = function () {

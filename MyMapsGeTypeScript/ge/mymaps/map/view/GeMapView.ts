@@ -49,6 +49,7 @@ module ge.mymaps.map.view {
         attached() {
             console.log('map view attached');
             this._roundDiv = <any>document.getElementById('geRoundDiv')
+            //this.list = <any>document.getElementById('list')
             this._roundProgress = new ru.flaps.uihelpers.RoundProgress(<any>document.getElementById('geRoundCanvas'));
          
         }
@@ -59,6 +60,8 @@ module ge.mymaps.map.view {
 
         private baseLayers: L.FeatureGroup<L.ILayer>;
         private clickGroup: L.FeatureGroup<L.ILayer>;
+
+        private list:any
         public initialize(): void {
             L.Icon.Default.imagePath = 'http://as3.ru/mapge/MyMapsGeTypeScript/components/leaflet';
 
@@ -285,11 +288,11 @@ module ge.mymaps.map.view {
         public set showMapsUI(value: boolean) {
             this._showMapUI = value
             if (this.showMapUI) {
-              //  this.list.style.display = "block;";
+                //this.list.style.display = "block;";
             }
             else {
 
-             //   this.list.style.display = "none;";
+                //this.list.style.display = "none;";
             }
         }
         public get showMapUI(): boolean {

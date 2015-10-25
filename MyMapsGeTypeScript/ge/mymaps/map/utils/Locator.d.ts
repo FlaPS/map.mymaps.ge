@@ -66,6 +66,7 @@ declare module ge.mymaps.map.utils {
          */
         lat: number;
         lng: number;
+        latLng: L.LatLng;
         /**
          * Short adress given by last updateAdress request
          */

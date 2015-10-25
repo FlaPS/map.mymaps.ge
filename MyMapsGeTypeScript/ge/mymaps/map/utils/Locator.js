@@ -108,6 +108,13 @@ var ge;
                         this.dispatchEventWith(Locator.GEO_LIVE_UPDATE);
                         this.updateAdress();
                     };
+                    Object.defineProperty(Locator.prototype, "latLng", {
+                        get: function () {
+                            return new L.LatLng(this.lat, this.lng);
+                        },
+                        enumerable: true,
+                        configurable: true
+                    });
                     /**
                      * Request for update adress data about current lat and lng
                      */

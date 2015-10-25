@@ -9,8 +9,22 @@ var ru;
         (function (events) {
             var EventDispatcher = (function () {
                 function EventDispatcher() {
+                    this._onceFunctions = [];
                     this._events = {};
                 }
+                EventDispatcher.prototype.on = function (key, fnc) {
+                    this.addEventListener(key, fnc);
+                };
+                EventDispatcher.prototype.off = function (key, fnc) {
+                    this.removeEventListener(key, fnc);
+                };
+                EventDispatcher.prototype.once = function (key, fnc) {
+                    this.addEventListener(key, fnc);
+                    if (this._onceFunctions[key] == null) {
+                        this._onceFunctions[key] = [];
+                    }
+                    this._onceFunctions[key].push(fnc);
+                };
                 EventDispatcher.prototype.addEventListener = function (key, func) {
                     if (!this._events.hasOwnProperty(key)) {
                         this._events[key] = [];
@@ -35,6 +49,14 @@ var ru;
                         for (var i in this._events[key]) {
                             //   console.log("Handler found for " + key);
                             this._events[key][i](dataObj);
+                        }
+                        if (this._onceFunctions[key]) {
+                            var fncs = this._onceFunctions[key];
+                            var n = 0;
+                            while (n < fncs.length) {
+                                this.removeEventListener(key, fncs[n]);
+                                n++;
+                            }
                         }
                     }
                 };

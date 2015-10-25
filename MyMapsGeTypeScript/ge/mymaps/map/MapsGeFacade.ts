@@ -1,4 +1,5 @@
-﻿
+﻿///<reference path="utils/Locator.ts" />
+///<reference path="data/LocatorMapObject.ts" />
 module ge.mymaps.map {
     @component("maps-ge-facade")
     export class MapsGeFacade extends polymer.Base implements polymer.Element {
@@ -20,10 +21,10 @@ module ge.mymaps.map {
 
             window['gmloaded'] = this.gmLoadedHandler.bind(this);
             if (window['google'] && window['google']['maps']) {
-                setTimeout(window['gmloaded'], 500);
+                setTimeout(window['gmloaded'], 1000);
             }
         }
-        private list: MapTypeList;
+       // private list: MapTypeList;
         private gmLoadedHandler(): void {
             window['gmloaded'] = function () { };
             this.locator = ge.mymaps.map.utils.Locator.instance;
@@ -35,9 +36,9 @@ module ge.mymaps.map {
             this._mapView = <any>document['getElementById']('mapView');
             this._mapView.initialize();
 
-            this.list = <any>document.getElementById('typesList');
+           // this.list = <any>document.getElementById('typesList');
 
-            this.list.setMapTypesProvider(this._mapView.mapTypesProvider);
+           // this.list.setMapTypesProvider(this._mapView.mapTypesProvider);
 
             this._markerCluster = this.mapView.markerCluster;
             this.showMapUI = false;
@@ -85,11 +86,11 @@ module ge.mymaps.map {
         public set showMapUI(value: boolean) {
             this._showMapUI = value
             if (value) {
-                this.list.style.display = "block";
+              //  this.list.style.display = "block";
             }
             else {
 
-                this.list.style.display = "none";
+              //  this.list.style.display = "none";
             }
         }
 
@@ -98,7 +99,24 @@ module ge.mymaps.map {
             return this._showMapUI
         }
 
+        private locatorMarker: ge.mymaps.map.data.LocatorMapObject = new ge.mymaps.map.data.LocatorMapObject()
 
+        public moveToLocation(): void
+        {
+            ge.mymaps.map.utils.Locator.instance.once(ge.mymaps.map.utils.Locator.GEO_LIVE_UPDATE, this.moveMapToGeoLiveUpdateHandler.bind(this))
+            ge.mymaps.map.utils.Locator.instance.updateLiveLocation()
+
+        }
+
+        private moveMapToGeoLiveUpdateHandler(e: any) {
+            console.log("move map to current user's location")
+            this.mapView.leafletMap.setView(ge.mymaps.map.utils.Locator.instance.latLng)
+            this.mapView.leafletMap.addLayer(this.locatorMarker.marker)
+            this.locatorMarker.lat = ge.mymaps.map.utils.Locator.instance.lat
+            this.locatorMarker.lng = ge.mymaps.map.utils.Locator.instance.lng
+            this.mapView.centerLatLng = this.locatorMarker.latLng
+            this.locatorMarker.updateMarker()
+        }
 
     }
 }

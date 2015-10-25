@@ -132,7 +132,9 @@
         public lng: number = 131.8780093;
 
 
-
+        public get latLng(): L.LatLng {
+            return new L.LatLng(this.lat, this.lng)
+        }
         /**
          * Short adress given by last updateAdress request
          */

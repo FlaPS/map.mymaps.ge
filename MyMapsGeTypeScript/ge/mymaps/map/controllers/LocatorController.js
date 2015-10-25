@@ -3,6 +3,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
+// <reference path="../utils/Locator.ts" />
 var ge;
 (function (ge) {
     var mymaps;
@@ -32,6 +33,9 @@ var ge;
                         enumerable: true,
                         configurable: true
                     });
+                    LocatorController.prototype.moveToLocation = function () {
+                        //Locator
+                    };
                     return LocatorController;
                 })(ru.flaps.events.EventDispatcher);
                 controllers.LocatorController = LocatorController;

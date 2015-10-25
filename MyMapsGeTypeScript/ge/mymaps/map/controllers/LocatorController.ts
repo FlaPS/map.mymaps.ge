@@ -1,4 +1,5 @@
-﻿module ge.mymaps.map.controllers {
+﻿// <reference path="../utils/Locator.ts" />
+module ge.mymaps.map.controllers {
     export class LocatorController extends ru.flaps.events.EventDispatcher
     {
 
@@ -22,6 +23,12 @@
          */
         constructor() {
             super();
+        }
+
+
+        public moveToLocation(): void
+        {
+            //Locator
         }
 
     }

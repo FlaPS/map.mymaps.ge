@@ -19,10 +19,25 @@ var ge;
                         _super.call(this);
                         this.lat = lat;
                         this.lng = lng;
+                        this.iconUrl = "http://mymaps.ge/images/marker-icon.png";
+                        this.iconRetinaUrl = "http://mymaps.ge/images/marker-icon-2х.png";
                         this.latLng = L.latLng(lat, lng);
                         this._marker = L.marker(this.latLng);
                         this.updateMarker();
                     }
+                    Object.defineProperty(MarkerMapObject.prototype, "latLng", {
+                        get: function () {
+                            return new L.LatLng(this.lat, this.lng);
+                        },
+                        set: function (value) {
+                            this.lat = value.lat;
+                            this.lng = value.lng;
+                            if (this._marker)
+                                this.updateMarker();
+                        },
+                        enumerable: true,
+                        configurable: true
+                    });
                     Object.defineProperty(MarkerMapObject.prototype, "marker", {
                         get: function () {
                             return this._marker;
@@ -34,7 +49,11 @@ var ge;
                         this._marker.setLatLng(this.latLng);
                         //  var icon: L.Icon
                         this._marker.setIcon(new L.Icon.Default());
-                        //  this._marker.setIcon();
+                        var iconOptions = {};
+                        iconOptions.iconUrl = this.iconUrl;
+                        iconOptions.iconRetinaUrl = this.iconRetinaUrl;
+                        var icon = new L.Icon(iconOptions);
+                        this._marker.setIcon(icon);
                         this._marker.update();
                     };
                     return MarkerMapObject;
